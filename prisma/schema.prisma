@@ -11,7 +11,6 @@ model Event {
   id    Int     @id @default(autoincrement())
   title  String
   sourceLink String
-  source Source @relation(fields: [sourceId], references: [id])
   sourceId Int
   description String?
   shortDescription String?
@@ -22,8 +21,10 @@ model Event {
   price Decimal?
   image Bytes?
   organizer String?
-  lastInsertedAt DateTime
-  lastUpdatedAt DateTime
+  categories Category[]
+  source Source @relation(fields: [sourceId], references: [id])
+  lastInsertedAt DateTime @default(now())
+  lastUpdatedAt DateTime @updatedAt
 }
 
 model Source {
@@ -32,7 +33,14 @@ model Source {
   link String
   type String
   events Event[]
-  lastInsertedAt DateTime 
-  lastUpdatedAt DateTime
+  lastInsertedAt DateTime @default(now())
+  lastUpdatedAt DateTime @updatedAt
 }
 
+model Category {
+  id Int @id @default(autoincrement())
+  title String
+  events Event[]
+  lastInsertedAt DateTime @default(now())
+  lastUpdatedAt DateTime @updatedAt
+}
