@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    // todo: remove then
+    domains: ["cdn-icons-png.flaticon.com"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
