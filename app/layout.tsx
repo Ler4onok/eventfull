@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 // todo: read about fonts load optimization
 // fonts
-import { Ysabeau_Infant } from "next/font/google";
+import { Ysabeau_Infant, Rubik } from "next/font/google";
 // css
 import "./globals.css";
 // components
-import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-export const font = Ysabeau_Infant({
+export const font = Rubik({
   subsets: ["latin", "cyrillic"],
   weight: "300",
 });
@@ -27,7 +26,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Navbar />
         {children}
         {/* <Footer /> */}
       </body>
