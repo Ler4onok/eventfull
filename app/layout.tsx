@@ -9,7 +9,7 @@ import { Footer } from "@/components/Footer";
 
 export const font = Rubik({
   subsets: ["latin", "cyrillic"],
-  weight: "300",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 // todo: read about metadata

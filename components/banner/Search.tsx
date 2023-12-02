@@ -1,5 +1,5 @@
-import { IoSearchSharp } from "react-icons/io5";
+import { IoSearchSharp as SearchIcon } from "react-icons/io5";
 
 export const Search = () => {
-  return <IoSearchSharp size={20} />;
+  return <SearchIcon size={20} />;
 };

@@ -14,7 +14,7 @@ export const EventList = async () => {
 
   return (
     // todo: change to grid
-    <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-3">
+    <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
       {events.map((event: IEventCard) => (
         <EventCard key={event.id} {...event} />
       ))}

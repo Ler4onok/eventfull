@@ -16,7 +16,7 @@ export const Dropdown = ({ options }: IDropdown) => {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex justify-start align-center rounded-md border shadow-sm pr-2 pl-1 py-2text-sm"
+          className="flex justify-start items-center rounded-md border border-2 shadow-sm pr-2 pl-1 py-2text-sm"
         >
           {value}
           <svg
