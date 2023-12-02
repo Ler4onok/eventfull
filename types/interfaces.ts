@@ -20,7 +20,7 @@ export interface Event {
 export interface IEventCard {
   id: number;
   title: string;
-  startDate?: string;
+  startDate?: Date;
   startTime?: string;
   location?: string;
   imageLink?: string;

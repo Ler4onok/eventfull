@@ -13,7 +13,8 @@ export const EventList = async () => {
   const events = JSON.parse(file);
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3">
+    // todo: change to grid
+    <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-3">
       {events.map((event: IEventCard) => (
         <EventCard key={event.id} {...event} />
       ))}
