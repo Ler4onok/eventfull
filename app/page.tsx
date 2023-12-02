@@ -1,3 +1,4 @@
+import { Banner } from "@/components/banner/Banner";
 import { EventList } from "@/components/EventList";
 import { Filters } from "@/components/filters/Filters";
 import { Section } from "@/components/Section";
@@ -5,9 +6,7 @@ import { Section } from "@/components/Section";
 export default async function Home() {
   return (
     <>
-      <Section name="First Section">
-        <div>intro</div>
-      </Section>
+      <Banner />
       <Section>
         <Filters />
         <EventList />
