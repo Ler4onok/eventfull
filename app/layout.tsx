@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 // todo: read about fonts load optimization
 // fonts
-import { Ysabeau_Infant } from "next/font/google";
+import { Ysabeau_Infant, Rubik, Poppins } from "next/font/google";
 // css
 import "./globals.css";
 // components
-import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-export const font = Ysabeau_Infant({
-  subsets: ["latin", "cyrillic"],
-  weight: "300",
+const customFont = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 // todo: read about metadata
@@ -26,8 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={font.className}>
-        <Navbar />
+      <body className={customFont.className}>
         {children}
         {/* <Footer /> */}
       </body>

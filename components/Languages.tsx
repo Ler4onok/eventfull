@@ -1,3 +1,5 @@
+import { Dropdown } from "./Dropdown";
+
 export const Languages = () => {
-  return <div>Languages</div>;
+  return <Dropdown options={[{ value: "En" }, { value: "Pt" }]} />;
 };

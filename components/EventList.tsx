@@ -3,7 +3,7 @@ import type { IEventCard } from "@/types/interfaces";
 // hooks
 // import { useEvents } from "@/hooks/useEvents";
 // components
-import { EventCard } from "./EventCard";
+import { EventCard } from "./eventCard/EventCard";
 import { promises as fs } from "fs";
 
 export const EventList = async () => {
