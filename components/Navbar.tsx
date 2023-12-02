@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { Languages } from "./Languages";
 
 export const Navbar = () => {
   return (
@@ -13,9 +13,10 @@ export const Navbar = () => {
           height={50}
         />
       </Link>
-      <Link href="/link-1">Link 1</Link>
-      <Link href="/link-2">Link 2</Link>
-      <Link href="/link-3">Link 3</Link>
+      <Link href="/events">Events</Link>
+      <Link href="/calendar">Calendar</Link>
+      <Link href="/map">Map</Link>
+      <Languages />
     </nav>
   );
 };
