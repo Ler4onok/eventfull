@@ -1,12 +1,21 @@
 "use client";
 import { useState } from "react";
+// icons
+import { IoIosArrowDown as ArrowDownIcon } from "react-icons/io";
 
 interface IDropdown {
   options: { value: string }[];
+  onOptionClick?: (value: string) => void;
+  styles?: string;
 }
 
 // todo: cleanup
-export const Dropdown = ({ options }: IDropdown) => {
+// todo: close on overlay click
+export const Dropdown = ({
+  options,
+  onOptionClick = (value) => {},
+  styles = "",
+}: IDropdown) => {
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(options[0].value);
 
@@ -16,22 +25,10 @@ export const Dropdown = ({ options }: IDropdown) => {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex justify-start items-center rounded-md border border-2 shadow-sm pr-2 pl-1 py-2text-sm"
+          className={`flex justify-start items-center rounded-md border pr-2 pl-1 py-2text-sm ${styles}`}
         >
           {value}
-          <svg
-            className="-mr-1 ml-2 h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <ArrowDownIcon className="ml-1" />
         </button>
       </div>
 
@@ -51,7 +48,9 @@ export const Dropdown = ({ options }: IDropdown) => {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                   onClick={(event) => {
-                    setValue(event.currentTarget.textContent || "");
+                    const chosenValue = event.currentTarget.textContent || "";
+                    setValue(chosenValue);
+                    onOptionClick(chosenValue);
                     setIsOpen(false);
                   }}
                 >
