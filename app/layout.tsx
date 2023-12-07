@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 // todo: read about fonts load optimization
 // fonts
-import { Ysabeau_Infant, Rubik, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 // css
 import "./globals.css";
 // components
-import { Footer } from "@/components/Footer";
+// import { Footer } from "@/components/Footer";
 
-const customFont = Poppins({
+const font = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={customFont.className}>
+      <body className={font.className}>
         {children}
         {/* <Footer /> */}
       </body>

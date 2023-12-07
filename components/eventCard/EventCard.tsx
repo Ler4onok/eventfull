@@ -18,7 +18,7 @@ export const EventCard = ({
 
   return (
     <Link href={`/events/${id}`}>
-      <div className="max-w-md mx-auto bg-white overflow-hidden md:max-w-2xl m-4 h-[400px]">
+      <div className="max-w-md mx-auto bg-white overflow-hidden md:max-w-2xl m-4 h-[300px]">
         <div className="rounded-xl overflow-hidden">
           {imageLink && (
             <Image

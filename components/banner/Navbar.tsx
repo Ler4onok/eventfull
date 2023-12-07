@@ -7,9 +7,9 @@ import { Search } from "./Search";
 // todo: add intl
 export const Navbar = () => {
   return (
-    <nav className="absolute z-20 text-white w-full flex justify-between align-center p-8">
+    <nav className="absolute z-20 text-white w-full flex justify-between items-center p-8">
       <Logo />
-      <div className="flex align-center justify-end gap-8">
+      <div className="flex items-center justify-end gap-8">
         <Search />
         <Link href="/map">Map</Link>
         <Link href="/calendar">Calendar</Link>
