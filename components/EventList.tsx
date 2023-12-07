@@ -1,16 +1,14 @@
+"use client";
 // types
 import type { IEventCard } from "@/types/interfaces";
 // hooks
 // import { useEvents } from "@/hooks/useEvents";
 // components
 import { EventCard } from "./eventCard/EventCard";
-import { promises as fs } from "fs";
+import { events } from "@/app/events";
 
-export const EventList = async () => {
+export const EventList = () => {
   // const { events } = useEvents();
-  // mock data
-  const file = await fs.readFile(process.cwd() + "/events.json", "utf8");
-  const events = JSON.parse(file);
 
   return (
     // todo: change to grid

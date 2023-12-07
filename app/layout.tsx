@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 // todo: read about fonts load optimization
 // fonts
-import { Ysabeau_Infant, Rubik } from "next/font/google";
+import { Poppins } from "next/font/google";
 // css
 import "./globals.css";
 // components
-import { Footer } from "@/components/Footer";
+// import { Footer } from "@/components/Footer";
 
-export const font = Rubik({
-  subsets: ["latin", "cyrillic"],
+export const font = Poppins({
+  subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
