@@ -3,36 +3,60 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Event {
-  id    Int     @id @default(autoincrement())
-  title  String
-  sourceLink String
-  source Source @relation(fields: [sourceId], references: [id])
-  sourceId Int
-  description String?
-  shortDescription String?
-  location String?
-  address String?
-  startDate DateTime?
-  endDate DateTime?
-  price Decimal?
-  image Bytes?
-  organizer String?
-  lastInsertedAt DateTime
-  lastUpdatedAt DateTime
+  id                Int         @id @default(autoincrement())
+  title             String      @map("title") @db.VarChar(256)
+  sourceLink        String      @map("source_link") @db.VarChar(256)
+  sourceId          Int         @map("source_id")
+  description       String?     @map("description")
+  shortDescription  String?     @map("short_description")
+  location          String?     @map("location") @db.VarChar(256)
+  address           String?     @map("address") @db.VarChar(256)
+  startDate         DateTime?   @map("start_date")
+  endDate           DateTime?   @map("end_date")
+  price             Decimal?    @map("price")
+  imageLink         String?     @map("image_link") @db.VarChar(256)
+  organizer         String?     @map("organizer") @db.VarChar(256)
+  source            Source      @relation(fields: [sourceId], references: [id])
+  lastInsertedAt    DateTime    @map("last_inserted_at") @default(now())
+  lastUpdatedAt     DateTime    @map("last_updated_at") @updatedAt @default(now())
+  event_to_category EventToCategory[] // virtual relation field
+
+  @@map("event")
 }
 
 model Source {
-  id Int @id @default(autoincrement())
-  title String
-  link String
-  type String
-  events Event[]
-  lastInsertedAt DateTime 
-  lastUpdatedAt DateTime
+  id                Int         @id @default(autoincrement())
+  title             String      @map("title") @db.VarChar(256)
+  link              String      @map("link") @db.VarChar(256)
+  type              String      @map("type") @db.VarChar(256)
+  events            Event[]
+  lastInsertedAt    DateTime    @map("last_inserted_at") @default(now())
+  lastUpdatedAt     DateTime    @map("last_updated_at") @updatedAt @default(now())
+
+  @@map("source")
 }
 
+model Category {
+  id                Int         @id @default(autoincrement())
+  title             String      @map("title") @db.VarChar(256) @unique
+  lastInsertedAt    DateTime    @map("last_inserted_at") @default(now())
+  lastUpdatedAt     DateTime    @map("last_updated_at") @updatedAt @default(now())
+  event_to_category EventToCategory[] // virtual relation field
+
+  @@map("category")
+}
+
+model EventToCategory {
+  event_id          Int 
+  category_id       Int 
+  events            Event       @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction) 
+  categories        Category    @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([event_id, category_id], map: "event_id_category_id_unique")
+  @@map("event_to_category")
+}
