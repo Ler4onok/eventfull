@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id    Int     @id @default(autoincrement())
+  title  String
+  sourceLink String
+  source Source @relation(fields: [sourceId], references: [id])
+  sourceId Int
+  description String?
+  shortDescription String?
+  location String?
+  address String?
+  startDate DateTime?
+  endDate DateTime?
+  price Decimal?
+  image Bytes?
+  organizer String?
+  lastInsertedAt DateTime
+  lastUpdatedAt DateTime
+}
+
+model Source {
+  id Int @id @default(autoincrement())
+  title String
+  link String
+  type String
+  events Event[]
+  lastInsertedAt DateTime 
+  lastUpdatedAt DateTime
+}
+
