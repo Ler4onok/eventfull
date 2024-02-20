@@ -17,7 +17,7 @@ export const events = [
     imageLink:
       "https://eventsmadeira.com/oordypsa/2022/06/Desfile-Pai-Natal-1130x650.jpg",
     organizer: null,
-    price: null,
+    price: '1',
     created_at: 1700929083241,
   },
   {
