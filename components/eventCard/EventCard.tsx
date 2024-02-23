@@ -8,7 +8,7 @@ import { EventCardInfo } from "./EventCardInfo";
 export const EventCard = ({
   id,
   title,
-  startDate,
+  start_date,
   location,
   imageLink,
 }: IEventCard) => {

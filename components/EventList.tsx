@@ -17,8 +17,7 @@ export const EventList = () => {
     <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
     {/* todo: types */}
       {events.map((event: any) => { 
-        const eventCategories = event.categories?.replace(' ', '').split(',') || [];
-        const containsElement = eventCategories.some((category: string) => activeCategories?.includes(category));
+        const containsElement = event.categories.some((category: string) => activeCategories?.includes(category));
 
         if (activeCategories && !containsElement) {
           return null;

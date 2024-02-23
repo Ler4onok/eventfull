@@ -10,18 +10,31 @@ import { ArrowBackIcon } from "@/components/icons/ArrowBackIcon";
 // types
 import { EOrientation } from "@/types/enums";
 // mock data
-import { events } from "@/app/events";
 import { useRouter } from "next/navigation";
+import { useEvents } from "@/hooks/useEvents";
+import { useEffect, useState } from "react";
 
 
 
 const Event = () => {
   const { id } = useParams();
+  // todo: add event type
+  const [event, setEvent] = useState({} as any)
+
+useEffect(()=> {
+  const getEvent = async (eventId: number) => {
+    const res = await fetch(`/api/events/${eventId}`);
+    const event = await res.json();
+    setEvent(event)
+  };
+
+  getEvent(Number(id))
+}, [id])
+ 
   const router = useRouter();
 
   // todo: change 
   const eventId = Number(id) - 1;
-  const event = events[eventId];
 
   const onBackClick = () => {
     router.back();
@@ -29,8 +42,9 @@ const Event = () => {
 // todo: startDate and end_date change in schema
 // todo: add end_date support 
   const eventDetails: IEventDetails = {
-    date: `${event.startDate} ${event.end_date ? `- ${event.end_date}` : ''}`,
-    time: event.start_time,
+    date: `${event.startDate} ${event.endDate ? `- ${event.endDate}` : ''}`,
+    // todo: change
+    time: event.start_time || '10:00',
     price: event.price,
     location: event.location,
     address: event.address, 
