@@ -5,9 +5,10 @@ import { Slogan } from "./Slogan";
 interface IBannerProps {
   image: string;
   title: string;
+  categories?: string[];
 }
 
-export const Banner = ({ image, title }: IBannerProps) => {
+export const Banner = ({ image, title, categories }: IBannerProps) => {
   return (
     <div className="w-full h-[32rem]">
       <div
@@ -17,7 +18,7 @@ export const Banner = ({ image, title }: IBannerProps) => {
         }}
       >
         <Navbar />
-        <Slogan title={title} />
+        <Slogan title={title} categories={categories}/>
         <Overlay />
       </div>
     </div>

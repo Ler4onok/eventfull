@@ -7,9 +7,9 @@ interface IButtonProps {
 
 export const Button = ({ text, onClick, icon, styles }: IButtonProps) => {
   return (
-    <button onClick={onClick} className={`border-2 border-brandPurple text-brandPurple bg-transparent px-2 py-1 rounded flex justify-center items-center gap-2 ${styles}`}>
+    <button onClick={onClick} className={`border-[1px] border-brandPurple text-brandPurple bg-transparent px-2 py-1 rounded flex justify-center items-center gap-2 ${styles}`}>
       {icon && icon}
-      <p>{text}</p>
+      <p className="font-thin">{text}</p>
     </button>
   );
 };

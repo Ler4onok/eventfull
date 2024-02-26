@@ -14,47 +14,48 @@ import { useRouter } from "next/navigation";
 import { useEvents } from "@/hooks/useEvents";
 import { useEffect, useState } from "react";
 
-
-
 const Event = () => {
   const { id } = useParams();
   // todo: add event type
-  const [event, setEvent] = useState({} as any)
+  const [event, setEvent] = useState({} as any);
 
-useEffect(()=> {
-  const getEvent = async (eventId: number) => {
-    const res = await fetch(`/api/events/${eventId}`);
-    const event = await res.json();
-    setEvent(event)
-  };
+  useEffect(() => {
+    const getEvent = async (eventId: number) => {
+      const res = await fetch(`/api/events/${eventId}`);
+      const event = await res.json();
+      setEvent(event);
+    };
 
-  getEvent(Number(id))
-}, [id])
- 
+    getEvent(Number(id));
+  }, [id]);
+
   const router = useRouter();
 
-  // todo: change 
+  // todo: change
   const eventId = Number(id) - 1;
 
   const onBackClick = () => {
     router.back();
-  }
-// todo: startDate and end_date change in schema
-// todo: add end_date support 
+  };
+  // todo: startDate and end_date change in schema
+  // todo: add end_date support
   const eventDetails: IEventDetails = {
-    date: `${event.startDate} ${event.endDate ? `- ${event.endDate}` : ''}`,
-    // todo: change
-    time: event.start_time || '10:00',
+    // date: `${event.startDate} ${event.endDate ? `- ${event.endDate}` : ''}`,
+    startDatetime: event.startDate,
     price: event.price,
     location: event.location,
-    address: event.address, 
+    address: event.address,
     link: event.sourceLink,
-  }
+  };
   return (
     <>
-      <Banner image={event.imageLink} title={event.title} />
+      <Banner
+        image={event.imageLink}
+        title={event.title}
+        categories={event.categories}
+      />
       <Section>
-        <EventDetails eventDetails={eventDetails}/>
+        <EventDetails eventDetails={eventDetails} />
       </Section>
       <Section>
         <div className="flex items-start justify-start gap-6">

@@ -20,7 +20,7 @@ export const CategoriesFilter = () => {
           <Chip
             key={index}
             value={category}
-            styles={{ basic: "bg-gray-200", active: "bg-gray-500 text-white" }}
+            styles={{ basic: "bg-gray-200", active: "bg-brandPurple text-white" }}
           />
         );
       })}
