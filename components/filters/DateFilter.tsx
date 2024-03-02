@@ -6,7 +6,7 @@ const dates = ["Today", "Tomorrow", "This Weekend"];
 export const DateFilter = () => {
   // todo: change key to category.id
   return (
-    <>
+    <div className="flex items-center justify-start gap-2">
       {dates.map((date, index) => {
         return (
           <Chip
@@ -18,8 +18,8 @@ export const DateFilter = () => {
       })}
       <Dropdown
         label="Choose the date"
-        options={[{ value: "1" }, { value: "2" }]}
+        options={["1", "2"]}
       />
-    </>
+    </ div>
   );
 };

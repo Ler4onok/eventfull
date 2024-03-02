@@ -1,17 +1,16 @@
-import { Dropdown } from "../Dropdown";
+import { BetterDropdown } from "../BetterDropdown";
 // icons
 import { LocationIcon } from "../icons/LocationIcon";
 
+const options = ["Funchal", "Ponto do Sol", "Porto Moniz"];
+
 export const LocationFilter = () => {
   return (
-    <Dropdown
-      options={[
-        { value: "Funchal" },
-        { value: "Ponto do Sol" },
-        { value: "Porto Moniz" },
-      ]}
-      styles={{ button: "p-1", dropdown: "" }}
+    <BetterDropdown
+      label="Choose location"
+      options={options}
       icon={<LocationIcon className="mr-1" />}
+      paramType="location"
     />
   );
 };

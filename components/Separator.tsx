@@ -14,5 +14,5 @@ export const Separator = ({ orientation }: ISeparatorProps) => {
     );
   }
 
-  return <div className="border-l border-gray-200 h-[24px]" />;
+  return <div className="border-l border-gray-200 h-[24px] hidden md:block" />;
 };

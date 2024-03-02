@@ -3,8 +3,9 @@ import { useState, ReactNode } from "react";
 // icons
 import { IoIosArrowDown as ArrowDownIcon } from "react-icons/io";
 
-interface IDropdown {
-  options: { value: string }[];
+export interface IDropdown {
+  options: string[];
+  paramType: string;
   label?: string;
   onOptionClick?: (value: string) => void;
   styles?: { button: string; dropdown: string };
@@ -15,7 +16,7 @@ interface IDropdown {
 // todo: close on overlay click
 export const Dropdown = ({
   options,
-  label = options[0].value,
+  label = options[0],
   onOptionClick = (value) => {},
   styles = { button: "", dropdown: "" },
   icon,
@@ -61,7 +62,7 @@ export const Dropdown = ({
                     setIsOpen(false);
                   }}
                 >
-                  {option.value}
+                  {option}
                 </a>
               );
             })}
@@ -71,3 +72,4 @@ export const Dropdown = ({
     </div>
   );
 };
+
