@@ -1,5 +1,8 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 // components
 import { Button } from "@/components/Button";
 import { EventDetails, IEventDetails } from "@/components/EventDetails";
@@ -7,15 +10,16 @@ import { Section } from "@/components/Section";
 import { Separator } from "@/components/Separator";
 import { Banner } from "@/components/banner/Banner";
 import { ArrowBackIcon } from "@/components/icons/ArrowBackIcon";
+import { EventCard } from "@/components/eventCard/EventCard";
 // types
 import { EOrientation } from "@/types/enums";
 // mock data
-import { useRouter } from "next/navigation";
-import { useEvents } from "@/hooks/useEvents";
-import { useEffect, useState } from "react";
+import { events } from "@/app/events";
 
 const Event = () => {
+  const router = useRouter();
   const { id } = useParams();
+
   // todo: add event type
   const [event, setEvent] = useState({} as any);
 
@@ -29,14 +33,10 @@ const Event = () => {
     getEvent(Number(id));
   }, [id]);
 
-  const router = useRouter();
-
-  // todo: change
-  const eventId = Number(id) - 1;
-
   const onBackClick = () => {
     router.back();
   };
+
   // todo: startDate and end_date change in schema
   // todo: add end_date support
   const eventDetails: IEventDetails = {
@@ -64,7 +64,14 @@ const Event = () => {
         </div>
       </Section>
       <Separator orientation={EOrientation.HORIZONTAL} />
-      <Section name="You might also like">events</Section>
+      <Section name="You may also like">
+        {/* todo: introduce api endpoint to get events with the same category */}
+        <div className="flex items-center justify-center gap-4">
+          {events.slice(0, 4).map((event) => {
+            return <EventCard {...event} key={event.id} />;
+          })}
+        </div>
+      </Section>
     </>
   );
 };

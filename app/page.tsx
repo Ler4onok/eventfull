@@ -1,11 +1,10 @@
 "use client";
 
+// components
 import { Banner } from "@/components/banner/Banner";
 import { EventList } from "@/components/EventList";
 import { Filters } from "@/components/filters/Filters";
 import { Section } from "@/components/Section";
-// db
-import { useEffect, useState } from "react";
 
 // todo: change
 const homeImage =
