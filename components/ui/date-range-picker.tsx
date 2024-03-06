@@ -5,7 +5,6 @@ import { Button } from "./button";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Calendar } from "./calendar";
 import { DateInput } from "./date-input";
-import { Label } from "./label";
 import {
   Select,
   SelectContent,
@@ -13,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./select";
-import { Switch } from "./switch";
 import {
   ChevronUpIcon,
   ChevronDownIcon,

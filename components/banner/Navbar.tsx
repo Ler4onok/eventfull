@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Languages } from "../Languages";
 import { Logo } from "../Logo";
 import { Search } from "./Search";
+import { Links } from "./Links";
 
 // todo: add intl
 export const Navbar = () => {
@@ -11,8 +12,7 @@ export const Navbar = () => {
       <Logo />
       <div className="flex items-center justify-end gap-8">
         <Search />
-        <Link href="/map">Map</Link>
-        <Link href="/calendar">Calendar</Link>
+        <Links />
         <Languages />
       </div>
     </nav>

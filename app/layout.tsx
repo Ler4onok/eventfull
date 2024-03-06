@@ -5,7 +5,7 @@ import { Poppins } from "next/font/google";
 // css
 import "./globals.css";
 // components
-// import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/Footer";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         {children}
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );

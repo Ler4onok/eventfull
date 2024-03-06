@@ -24,7 +24,7 @@ const config = {
       //     'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       // },
       colors: {
-        brandPurple: 'hsl(261, 100%, 25%)', // '#390099'
+        brandPurple: '#390099', 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
