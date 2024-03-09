@@ -9,6 +9,7 @@ import { useEvents } from "@/hooks/useEvents";
 // components
 import { EventCard } from "./eventCard/EventCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Loader } from "./Loader";
 
 export const EventList = () => {
   const { events } = useEvents();
@@ -43,7 +44,7 @@ export const EventList = () => {
       dataLength={items.length}
       next={fetchMoreData}
       hasMore={hasMore}
-      loader={<h4>Loading...</h4>}
+      loader={<Loader />}
       className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10"
     >
         {/* todo: types */}

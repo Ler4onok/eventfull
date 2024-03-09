@@ -5,6 +5,10 @@ import { IoMdPricetag as PriceIcon } from "react-icons/io";
 
 type TEventCardInfo = Partial<IEventCard> & { date: string };
 
+const commonIconProps = {
+  className: "mt-1 text-brandPurple",
+}
+
 export const EventCardInfo = ({
   title,
   date,
@@ -19,13 +23,13 @@ export const EventCardInfo = ({
           <div className="flex items-center justify-between gap-2">
             {/* todo: create global variable color and use here */}
             {/* todo: create icon abstraction */}
-            <CalendarIcon className="mt-1" />
+            <CalendarIcon {...commonIconProps} />
             <div className="mt-2 font-light ">{date}</div>
           </div>
         )}
         {price && (
           <div className="flex items-center justify-between gap-2">
-            <PriceIcon className="mt-1" />
+            <PriceIcon {...commonIconProps} />
             <div className="mt-2 font-light">{price}</div>
           </div>
         )}
