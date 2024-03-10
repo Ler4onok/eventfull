@@ -8,7 +8,7 @@ export interface IDropdown {
   paramType: string;
   label?: string;
   onOptionClick?: (value: string) => void;
-  styles?: { button: string; dropdown: string };
+  styles?: { button?: string; dropdown?: string };
   icon?: ReactNode;
 }
 

@@ -1,52 +1,29 @@
 "use client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useDropdownSelect } from "@/hooks/useDropdownSelect";
+import { FormEvent } from "react";
 
 interface ChipProps {
   value: string;
+  paramType?: string;
   styles?: { basic: string; active: string };
+  disabled?: boolean;
 }
 
-export const Chip = ({ value, styles }: ChipProps) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const queryParams = new URLSearchParams(searchParams);
-  const categories = queryParams.getAll("categories");
-  let params = categories.length === 0 ? [] : categories.toString().split(",");
-
-  const onSelect = (event: FormEvent<HTMLDivElement>) => {
-    const category = event.currentTarget.textContent as string;
-
-    if (params.includes(category)) {
-      params = params.filter((param) => param !== category);
-      params.length === 0
-        ? queryParams.delete("categories")
-        : queryParams.set("categories", params.join(","));
-      return router.push(`${pathname}?${queryParams.toString()}`, {
-        scroll: false,
-      });
-    }
-
-    queryParams.set("categories", [...params, category].join(","));
-    router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
-  };
-
-  const isActive = (value: string): boolean => {
-    return params.includes(value);
-  };
+export const Chip = ({ value, styles, paramType, disabled }: ChipProps) => {
+  const { onSelect, isActive } = useDropdownSelect({
+    paramType: paramType as string,
+  });
 
   const isActiveValue = isActive(value);
 
   return (
     <div
-      className={`rounded-md p-2 cursor-pointer ${
+      className={`rounded-md p-2  ${
         isActiveValue ? styles?.active : styles?.basic
-      }`}
-      onClick={(event) => {
-        onSelect(event);
-      }}
+      } ${!disabled && "cursor-pointer"}`}
+      {...(!disabled && {
+        onClick: (event: FormEvent<HTMLDivElement>) => onSelect(event),
+      })}
     >
       {value}
     </div>
