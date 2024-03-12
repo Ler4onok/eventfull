@@ -68,27 +68,20 @@ export const EventList = () => {
           );
 
         // todo: into fn
-        const eventStartdate = new Date(event.startDate);
+        const eventStartDate = new Date(event.startDate);
         const eventEndDate = new Date(event.endDate);
 
-        eventStartdate.setHours(0);
-        eventStartdate.setMinutes(0);
-        eventStartdate.setSeconds(0);
+        eventStartDate.setHours(0);
+        eventStartDate.setMinutes(0);
+        eventStartDate.setSeconds(0);
 
         eventEndDate.setHours(0);
         eventEndDate.setMinutes(0);
         eventEndDate.setSeconds(0);
 
         const isValidEvent =
-          eventStartdate >= startDate && eventStartdate <= endDate;
-        console.log({
-          title: event.title,
-          startDate,
-          endDate,
-          eventStartdate,
-          eventEndDate,
-          isValidEvent,
-        });
+          activeDate === null ||
+          (eventStartDate >= startDate && eventStartDate <= endDate);
 
         if (
           (activeCategories && !containsElement) ||

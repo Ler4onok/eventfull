@@ -8,7 +8,7 @@ import { LocationFilter } from "./LocationFilter";
 
 export const Filters = () => {
   return (
-    <div className="flex items-center justify-start w-full flex-wrap gap-4">
+    <div className="flex items-center justify-start w-full flex-wrap gap-4 text-sm font-thin">
       <LocationFilter />
       <Separator orientation={EOrientation.VERTICAL} />
       <CategoriesFilter />
