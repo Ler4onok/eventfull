@@ -25,8 +25,6 @@ export const EventList = () => {
   const startDate = new Date(dates[0] as string);
   const endDate = dates.length > 1 && new Date(dates[1] as string);
 
-  console.log({ startDate, endDate });
-
   const [items, setItems] = useState<IEventCard[]>([]);
   const [hasMore, setHasMore] = useState(true);
 
@@ -81,7 +79,10 @@ export const EventList = () => {
 
         const isValidEvent =
           activeDate === null ||
-          (eventStartDate >= startDate && eventStartDate <= endDate);
+          (eventStartDate >= startDate &&
+            (endDate
+              ? eventStartDate <= endDate
+              : eventStartDate <= startDate));
 
         if (
           (activeCategories && !containsElement) ||

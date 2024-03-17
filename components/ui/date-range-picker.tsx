@@ -1,23 +1,19 @@
 "use client";
-
-import React, { type FC, useState, useEffect, useRef } from "react";
+// todo: refactor whole component
+import React, {
+  type FC,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { Button } from "./button";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Calendar } from "./calendar";
 import { DateInput } from "./date-input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./select";
-import {
-  ChevronUpIcon,
-  ChevronDownIcon,
-  CheckIcon,
-} from "@radix-ui/react-icons";
-import { cn } from "@/lib/utils";
+
+import { ChevronUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { useDropdownSelect } from "@/hooks/useDropdownSelect";
 
 export interface DateRangePickerProps {
@@ -55,14 +51,8 @@ interface Preset {
 const PRESETS: Preset[] = [
   { name: "today", label: "Today" },
   { name: "tomorrow", label: "Tomorrow" },
-  //   { name: 'yesterday', label: 'Yesterday' },
-  //   { name: 'last7', label: 'Last 7 days' },
-  //   { name: 'last14', label: 'Last 14 days' },
-  //   { name: 'last30', label: 'Last 30 days' },
   { name: "thisWeek", label: "This Week" },
-  //   { name: 'lastWeek', label: 'Last Week' },
   { name: "thisMonth", label: "This Month" },
-  //   { name: 'lastMonth', label: 'Last Month' }
 ];
 
 /** The DateRangePicker component allows a user to select a range of dates */
@@ -131,51 +121,23 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
         to.setDate(to.getDate() + 1);
         to.setHours(23, 59, 59, 999);
         break;
-      //   case 'yesterday':
-      //     from.setDate(from.getDate() - 1)
-      //     from.setHours(0, 0, 0, 0)
-      //     to.setDate(to.getDate() - 1)
-      //     to.setHours(23, 59, 59, 999)
-      //     break
-      //   case 'last7':
-      //     from.setDate(from.getDate() - 6)
-      //     from.setHours(0, 0, 0, 0)
-      //     to.setHours(23, 59, 59, 999)
-      //     break
-      //   case 'last14':
-      //     from.setDate(from.getDate() - 13)
-      //     from.setHours(0, 0, 0, 0)
-      //     to.setHours(23, 59, 59, 999)
-      //     break
-      //   case 'last30':
-      //     from.setDate(from.getDate() - 29)
-      //     from.setHours(0, 0, 0, 0)
-      //     to.setHours(23, 59, 59, 999)
-      //     break
       case "thisWeek":
-        from.setDate(first);
+        const currentDay = from.getDay();
+        const distanceToMonday = currentDay - 1; // 1 represents Monday
+        const distanceToNextSunday = 7 - currentDay; // 7 represents next Sunday
+
+        from.setDate(from.getDate() - distanceToMonday);
         from.setHours(0, 0, 0, 0);
+
+        to.setDate(to.getDate() + distanceToNextSunday);
         to.setHours(23, 59, 59, 999);
         break;
-      //   case 'lastWeek':
-      //     from.setDate(from.getDate() - 7 - from.getDay())
-      //     to.setDate(to.getDate() - to.getDay() - 1)
-      //     from.setHours(0, 0, 0, 0)
-      //     to.setHours(23, 59, 59, 999)
-      //     break
       case "thisMonth":
         from.setDate(1);
         to.setDate(currentMonthDays);
         from.setHours(0, 0, 0, 0);
         to.setHours(23, 59, 59, 999);
         break;
-      //   case 'lastMonth':
-      //     from.setMonth(from.getMonth() - 1)
-      //     from.setDate(1)
-      //     from.setHours(0, 0, 0, 0)
-      //     to.setDate(0)
-      //     to.setHours(23, 59, 59, 999)
-      //     break
     }
 
     return { from, to };
@@ -183,6 +145,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
 
   const setPreset = (preset: string): void => {
     const range = getPresetRange(preset);
+    console.log({ range });
     setRange(range);
   };
 
@@ -232,6 +195,31 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     checkPreset();
   }, [range]);
 
+  useEffect(() => {
+    if (isOpen) {
+      openedRangeRef.current = range;
+    }
+  }, [isOpen, range]);
+
+  const isSameDate = String(range.to?.getDate()) === String(range.from.getDate());
+
+  const { onDateSelect } = useDropdownSelect({ paramType: "date" });
+
+  const getRangeLabel = useCallback(
+    (range: DateRange): string => {
+      const isSameDate = String(range.to?.getDate()) === String(range.from.getDate());
+      const rangeLabel = `${formatDate(range.from, locale)} ${
+        !isSameDate
+          ? range.to != null
+            ? " - " + formatDate(range.to, locale)
+            : ""
+          : ""
+      }`;
+      return rangeLabel;
+    },
+    [locale]
+  );
+
   const PresetButton = ({
     preset,
     label,
@@ -240,7 +228,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     preset: string;
     label: string;
     isSelected: boolean;
-  }): JSX.Element => (
+  }) => (
     <Button
       className={`rounded-md p-2 border-[1px] border-white bg-gray-200 ${
         isSelected && "bg-brandPurple text-white"
@@ -248,29 +236,20 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
       variant="none"
       onClick={() => {
         setPreset(preset);
+        const range = getPresetRange(preset);
+        const rangeLabel = getRangeLabel(range);
+        onUpdate?.({ range });
+        onDateSelect(rangeLabel);
       }}
     >
       <>{label}</>
     </Button>
   );
 
-  useEffect(() => {
-    if (isOpen) {
-      openedRangeRef.current = range;
-    }
-  }, [isOpen, range]);
-
-  const isSameDate = String(range.to) === String(range.from);
-
-  const { onDateSelect } = useDropdownSelect({ paramType: "date" });
-
-  const rangeLabel = `${formatDate(range.from, locale)} ${
-    !isSameDate
-      ? range.to != null
-        ? " - " + formatDate(range.to, locale)
-        : ""
-      : ""
-  }`;
+  const rangeLabel = useMemo(
+    () => getRangeLabel(range),
+    [getRangeLabel, range]
+  );
 
   return (
     <div className="flex gap-2">
