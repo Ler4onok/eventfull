@@ -1,5 +1,5 @@
 "use client";
-// todo: refactor whole component
+// todo: refactor the whole component
 import React, {
   type FC,
   useState,
@@ -67,13 +67,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
 }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [range, setRange] = useState<DateRange>({
-    from: new Date(new Date(initialDateFrom).setHours(0, 0, 0, 0)),
-    to: initialDateTo
-      ? new Date(new Date(initialDateTo).setHours(0, 0, 0, 0))
-      : new Date(new Date(initialDateFrom).setHours(0, 0, 0, 0)),
-  });
-
+  const [range, setRange] = useState<DateRange | undefined>(undefined);
   // Refs to store the values of range when the date picker is opened
   const openedRangeRef = useRef<DateRange | undefined>();
 
@@ -143,9 +137,8 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     return { from, to };
   };
 
-  const setPreset = (preset: string): void => {
-    const range = getPresetRange(preset);
-    console.log({ range });
+  const setPreset = (preset?: string): void => {
+    const range = preset ? getPresetRange(preset) : undefined;
     setRange(range);
   };
 
@@ -153,12 +146,16 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     for (const preset of PRESETS) {
       const presetRange = getPresetRange(preset.name);
 
-      const normalizedRangeFrom = new Date(range.from.setHours(0, 0, 0, 0));
+      const normalizedRangeFrom = new Date(
+        range ? range.from.setHours(0, 0, 0, 0) : 0
+      );
       const normalizedPresetFrom = new Date(
         presetRange.from.setHours(0, 0, 0, 0)
       );
 
-      const normalizedRangeTo = new Date(range.to?.setHours(0, 0, 0, 0) ?? 0);
+      const normalizedRangeTo = new Date(
+        range ? range.to?.setHours(0, 0, 0, 0) ?? 0 : 0
+      );
       const normalizedPresetTo = new Date(
         presetRange.to?.setHours(0, 0, 0, 0) ?? 0
       );
@@ -201,13 +198,16 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     }
   }, [isOpen, range]);
 
-  const isSameDate = String(range.to?.getDate()) === String(range.from.getDate());
+  const isSameDate = range
+    ? String(range.to?.getDate()) === String(range.from.getDate())
+    : false;
 
   const { onDateSelect } = useDropdownSelect({ paramType: "date" });
 
   const getRangeLabel = useCallback(
     (range: DateRange): string => {
-      const isSameDate = String(range.to?.getDate()) === String(range.from.getDate());
+      const isSameDate =
+        String(range.to?.getDate()) === String(range.from.getDate());
       const rangeLabel = `${formatDate(range.from, locale)} ${
         !isSameDate
           ? range.to != null
@@ -235,10 +235,10 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
       }`}
       variant="none"
       onClick={() => {
-        setPreset(preset);
-        const range = getPresetRange(preset);
-        const rangeLabel = getRangeLabel(range);
-        onUpdate?.({ range });
+        setPreset(isSelected ? undefined : preset);
+        const range = isSelected ? undefined : getPresetRange(preset);
+        const rangeLabel = range ? getRangeLabel(range) : undefined;
+        range && onUpdate?.({ range });
         onDateSelect(rangeLabel);
       }}
     >
@@ -247,7 +247,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
   );
 
   const rangeLabel = useMemo(
-    () => getRangeLabel(range),
+    () => (range ? getRangeLabel(range) : "Choose date range"),
     [getRangeLabel, range]
   );
 
@@ -297,7 +297,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
                   <div className="flex flex-col gap-2">
                     <div className="flex gap-2">
                       <DateInput
-                        value={range.from}
+                        value={range ? range.from : undefined}
                         onChange={(date) => {
                           const toDate =
                             range.to == null || date > range.to
@@ -314,7 +314,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
                         <>
                           <div className="py-1">-</div>
                           <DateInput
-                            value={range.to}
+                            value={range ? range.to : undefined}
                             onChange={(date) => {
                               const fromDate =
                                 date < range.from ? date : range.from;

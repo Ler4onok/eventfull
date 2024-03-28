@@ -17,10 +17,6 @@ export default function Home() {
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    router.push(`${pathname}?location=Funchal`, { scroll: false });
-  }, []);
-
   return (
     <>
       <Banner image={homeImage} title={homeTitle} />

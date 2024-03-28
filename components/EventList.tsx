@@ -47,11 +47,7 @@ export const EventList = () => {
   // todo: change strategy of filtering
   // todo: implement normal pagination
   return (
-    <InfiniteScroll
-      dataLength={items.length}
-      next={fetchMoreData}
-      hasMore={hasMore}
-      loader={<Loader />}
+    <div
       className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10"
     >
       {/* todo: types */}
@@ -93,6 +89,6 @@ export const EventList = () => {
         }
         return <EventCard key={event.id} {...event} />;
       })}
-    </InfiniteScroll>
+    </div>
   );
 };

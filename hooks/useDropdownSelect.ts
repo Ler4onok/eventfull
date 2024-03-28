@@ -36,8 +36,8 @@ export const useDropdownSelect = ({
     router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
   };
 
-  const onDateSelect = (range: string) => {
-    queryParams.set(paramType, range);
+  const onDateSelect = (range: string | undefined) => {
+    range ? queryParams.set(paramType, range): queryParams.delete(paramType);
     return router.push(`${pathname}?${queryParams.toString()}`, {
       scroll: false,
     });
