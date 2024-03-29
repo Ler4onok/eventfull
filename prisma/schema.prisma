@@ -18,7 +18,7 @@ model Event {
   address           String?     @map("address") @db.VarChar(256)
   startDate         DateTime?   @map("start_date")
   endDate           DateTime?   @map("end_date")
-  price             Decimal?    @map("price")
+  price             String?     @map("price") @db.VarChar(256)
   imageLink         String?     @map("image_link") @db.VarChar(256)
   organizer         String?     @map("organizer") @db.VarChar(256)
   source            Source      @relation(fields: [sourceId], references: [id])

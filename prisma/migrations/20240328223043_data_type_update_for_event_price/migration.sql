@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "event" ALTER COLUMN "price" SET DATA TYPE VARCHAR(256);

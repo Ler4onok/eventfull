@@ -28,9 +28,9 @@ export const EventList = () => {
   const [items, setItems] = useState<IEventCard[]>([]);
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    setItems(events.slice(0, 20));
-  }, [events]);
+  // useEffect(() => {
+  //   setItems(events.slice(0, 20));
+  // }, [events]);
 
   const fetchMoreData = () => {
     if (items.length >= events.length) {
@@ -38,9 +38,9 @@ export const EventList = () => {
       return;
     }
     // Simulating a delay in fetching more data
-    setTimeout(() => {
-      setItems(items.concat(events.slice(items.length, items.length + 20)));
-    }, 1000);
+    // setTimeout(() => {
+    //   setItems(items.concat(events.slice(items.length, items.length + 20)));
+    // }, 1000);
   };
 
   // todo: no events found
@@ -51,7 +51,7 @@ export const EventList = () => {
       className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10"
     >
       {/* todo: types */}
-      {items.map((event: any) => {
+      {events.map((event: any) => {
         const containsElement = event.categories.some((category: string) =>
           activeCategories?.includes(category)
         );
