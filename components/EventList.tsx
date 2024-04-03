@@ -33,18 +33,19 @@ export const EventList = () => {
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    console.log({e: events.length, i: items.length})
-    const isLastPage = events.length - items.length < 20 && events.length !== items.length;
-    console.log({isLastPage})
-    setHasMore(!isLastPage)
-    console.log({hasMore})
+    console.log({ e: events.length, i: items.length });
+    const isLastPage =
+      events.length - items.length < 20 && events.length !== items.length;
+    console.log({ isLastPage });
+    setHasMore(!isLastPage);
+    console.log({ hasMore });
     setItems(events);
   }, [events, hasMore, items]);
 
   const fetchData = () => {
     setIndex(index + 1);
 
-    console.log({hasMore})
+    console.log({ hasMore });
     queryParams.set("page", index.toString());
     router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
 
@@ -61,54 +62,56 @@ export const EventList = () => {
   // todo: change strategy of filtering
   // todo: implement normal pagination
   return (
-    <InfiniteScroll
-      dataLength={items.length} //This is important field to render the next data
-      next={fetchData}
-      hasMore={hasMore}
-      loader={<Loader />}
-      className="infinite-scroll-component"
-    >
-      <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
-        {/* todo: types */}
-        {items.map((event: any) => {
-          const containsElement = event.categories.some((category: string) =>
-            activeCategories?.includes(category)
-          );
-          const containsLocation =
-            event.location !== null &&
-            activeLocation?.some((location: string) =>
-              event.location.includes(location)
+    <>
+      <InfiniteScroll
+        dataLength={items.length}
+        next={fetchData}
+        hasMore={hasMore}
+        loader={<Loader />}
+        className="infinite-scroll-component"
+      >
+        <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
+          {/* todo: types */}
+          {items.map((event: any) => {
+            const containsElement = event.categories.some((category: string) =>
+              activeCategories?.includes(category)
             );
+            const containsLocation =
+              event.location !== null &&
+              activeLocation?.some((location: string) =>
+                event.location.includes(location)
+              );
 
-          // todo: into fn
-          const eventStartDate = new Date(event.startDate);
-          const eventEndDate = new Date(event.endDate);
+            // todo: into fn
+            const eventStartDate = new Date(event.startDate);
+            const eventEndDate = new Date(event.endDate);
 
-          eventStartDate.setHours(0);
-          eventStartDate.setMinutes(0);
-          eventStartDate.setSeconds(0);
+            eventStartDate.setHours(0);
+            eventStartDate.setMinutes(0);
+            eventStartDate.setSeconds(0);
 
-          eventEndDate.setHours(0);
-          eventEndDate.setMinutes(0);
-          eventEndDate.setSeconds(0);
+            eventEndDate.setHours(0);
+            eventEndDate.setMinutes(0);
+            eventEndDate.setSeconds(0);
 
-          const isValidEvent =
-            activeDate === null ||
-            (eventStartDate >= startDate &&
-              (endDate
-                ? eventStartDate <= endDate
-                : eventStartDate <= startDate));
+            const isValidEvent =
+              activeDate === null ||
+              (eventStartDate >= startDate &&
+                (endDate
+                  ? eventStartDate <= endDate
+                  : eventStartDate <= startDate));
 
-          if (
-            (activeCategories && !containsElement) ||
-            (activeLocation && !containsLocation) ||
-            !isValidEvent
-          ) {
-            return null;
-          }
-          return <EventCard key={event.id} {...event} />;
-        })}
-      </div>
-    </InfiniteScroll>
+            if (
+              (activeCategories && !containsElement) ||
+              (activeLocation && !containsLocation) ||
+              !isValidEvent
+            ) {
+              return null;
+            }
+            return <EventCard key={event.id} {...event} />;
+          })}
+        </div>
+      </InfiniteScroll>
+    </>
   );
 };

@@ -300,7 +300,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
                         value={range ? range.from : undefined}
                         onChange={(date) => {
                           const toDate =
-                            range.to == null || date > range.to
+                            range?.to == null || date > range.to
                               ? date
                               : range.to;
                           setRange((prevRange) => ({
@@ -316,11 +316,12 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
                           <DateInput
                             value={range ? range.to : undefined}
                             onChange={(date) => {
-                              const fromDate =
-                                date < range.from ? date : range.from;
+                              const fromDate = range?.from &&
+                                (date < range.from ? date : range.from);
                               setRange((prevRange) => ({
                                 ...prevRange,
-                                from: fromDate,
+                                // todo: change later
+                                from: fromDate ? fromDate : new Date(),
                                 to: date,
                               }));
                             }}
@@ -399,7 +400,8 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
             <Button
               onClick={() => {
                 setIsOpen(false);
-                onUpdate?.({ range });
+                // todo: change later
+                onUpdate?.({ range: range ? range : { from: new Date(), to: undefined } });
                 onDateSelect(rangeLabel);
               }}
             >
