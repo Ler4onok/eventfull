@@ -67,9 +67,9 @@ const Event = () => {
       <Section name="You may also like">
         {/* todo: introduce api endpoint to get events with the same category */}
         <div className="flex items-center justify-center gap-4">
-          {events.slice(0, 4).map((event) => {
+          {/* {events.slice(0, 4).map((event) => {
             return <EventCard {...event} key={event.id} />;
-          })}
+          })} */}
         </div>
       </Section>
     </>
