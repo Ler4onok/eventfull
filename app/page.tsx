@@ -5,8 +5,6 @@ import { Banner } from "@/components/banner/Banner";
 import { EventList } from "@/components/EventList";
 import { Filters } from "@/components/filters/Filters";
 import { Section } from "@/components/Section";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 // todo: change
 const homeImage =
@@ -14,9 +12,6 @@ const homeImage =
 const homeTitle = "Let your life be eventfull";
 
 export default function Home() {
-  const pathname = usePathname();
-  const router = useRouter();
-
   return (
     <>
       <Banner image={homeImage} title={homeTitle} />

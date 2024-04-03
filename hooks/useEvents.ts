@@ -18,6 +18,12 @@ export const useEvents = () => {
 
     fetchData();
   }, []);
+
+  const fetchMore = async (page: number) => {
+    const res = await fetch(`/api/?page=${page}`);
+    const data = await res.json();
+    setEvents([...events, ...data]);
+  }
   // setEvents(events);
   // } catch (err) {
   //   setError(true);
@@ -25,5 +31,5 @@ export const useEvents = () => {
   //   setLoading(false);
   // }
 
-  return { events, loading, error };
+  return { events, loading, error, fetchMore };
 };
