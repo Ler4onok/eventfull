@@ -33,19 +33,15 @@ export const EventList = () => {
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    console.log({ e: events.length, i: items.length });
     const isLastPage =
       events.length - items.length < 20 && events.length !== items.length;
-    console.log({ isLastPage });
     setHasMore(!isLastPage);
-    console.log({ hasMore });
     setItems(events);
   }, [events, hasMore, items]);
 
   const fetchData = () => {
     setIndex(index + 1);
 
-    console.log({ hasMore });
     queryParams.set("page", index.toString());
     router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
 
