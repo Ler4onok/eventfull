@@ -6,7 +6,6 @@ import { EventList } from "@/components/EventList";
 import { Filters } from "@/components/filters/Filters";
 import { Section } from "@/components/Section";
 
-export const dynamic = 'force-dynamic'
 
 // todo: change
 const homeImage =

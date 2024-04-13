@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -12,7 +13,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader } from "./Loader";
 
 export const EventList = () => {
-  const { events, fetchMore } = useEvents();
+  const { events, fetchMore, loading } = useEvents();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -28,47 +29,48 @@ export const EventList = () => {
   const startDate = new Date(dates[0] as string);
   const endDate = dates.length > 1 && new Date(dates[1] as string);
 
-  const [items, setItems] = useState<IEventCard[]>([]);
-  const [index, setIndex] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  // const [items, setItems] = useState<IEventCard[]>([]);
+  // const [index, setIndex] = useState(1);
+  // const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    const isLastPage =
-      events.length - items.length < 20 && events.length !== items.length;
-    setHasMore(!isLastPage);
-    setItems(events);
-  }, [events, hasMore, items]);
+  // useEffect(() => {
+  //   const isLastPage =
+  //     events.length - items.length < 20 && events.length !== items.length;
+  //   setHasMore(!isLastPage);
+  //   setItems(events);
+  // }, [events, hasMore, items]);
 
-  const fetchData = () => {
-    setIndex(index + 1);
+  // const fetchData = () => {
+  //   setIndex(index + 1);
 
-    queryParams.set("page", index.toString());
-    router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
+  //   queryParams.set("page", index.toString());
+  //   router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
 
-    // if (items.length > events.length) {
-    //   setHasMore(false);
-    //   return;
-    // }
-    setTimeout(() => {
-      fetchMore(index);
-    }, 1000);
-  };
+  //   // if (items.length > events.length) {
+  //   //   setHasMore(false);
+  //   //   return;
+  //   // }
+  //   setTimeout(() => {
+  //     fetchMore(index);
+  //   }, 1000);
+  // };
 
   // todo: no events found
   // todo: change strategy of filtering
   // todo: implement normal pagination
   return (
     <>
-      <InfiniteScroll
+    {loading && <Loader />}
+      {/* <InfiniteScroll
         dataLength={items.length}
         next={fetchData}
         hasMore={hasMore}
         loader={<Loader />}
         className="infinite-scroll-component"
-      >
+      > */}
         <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
           {/* todo: types */}
-          {items.map((event: any) => {
+          {events.map((event: any) => {
             const containsElement = event.categories.some((category: string) =>
               activeCategories?.includes(category)
             );
@@ -107,7 +109,7 @@ export const EventList = () => {
             return <EventCard key={event.id} {...event} />;
           })}
         </div>
-      </InfiniteScroll>
+      {/* </InfiniteScroll> */}
     </>
   );
 };

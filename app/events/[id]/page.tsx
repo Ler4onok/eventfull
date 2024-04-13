@@ -15,6 +15,7 @@ import { EventCard } from "@/components/eventCard/EventCard";
 import { EOrientation } from "@/types/enums";
 // mock data
 import { events } from "@/app/events";
+import { Loader } from "@/components/Loader";
 
 const Event = () => {
   const router = useRouter();
@@ -22,11 +23,13 @@ const Event = () => {
 
   // todo: add event type
   const [event, setEvent] = useState({} as any);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getEvent = async (eventId: number) => {
       const res = await fetch(`/api/events/${eventId}`);
       const event = await res.json();
+      setLoading(false)
       setEvent(event);
     };
 
@@ -54,6 +57,8 @@ const Event = () => {
         title={event.title}
         categories={event.categories}
       />
+       {loading ? <Loader /> :
+       <>
       <Section>
         <EventDetails eventDetails={eventDetails} />
       </Section>
@@ -72,6 +77,7 @@ const Event = () => {
           })} */}
         </div>
       </Section>
+      </>}
     </>
   );
 };

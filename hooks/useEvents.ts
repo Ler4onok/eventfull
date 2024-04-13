@@ -1,19 +1,19 @@
 import { IEventCard } from "@/types/interfaces";
+import { set } from "date-fns";
 import { promises as fs } from "fs";
 import { useEffect, useState } from "react";
 
 export const useEvents = () => {
   const [events, setEvents] = useState<IEventCard[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
-  // setLoading(true);
-  // try {
+ 
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/");
       const data = await res.json();
-      console.log({data})
+      setLoading(false);
       setEvents(data);
     };
 
