@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <Banner image={homeImage} title={homeTitle} />
-      <Section>
+      <Section styles="pb-16">
         <Filters />
         <EventList />
       </Section>

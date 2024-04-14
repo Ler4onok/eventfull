@@ -21,8 +21,10 @@ export interface IEventCard {
   id: number;
   title: string;
   startDate?: Date;
+  endDate?: Date;
   location?: string;
   imageLink?: string;
   price?: string;
   categories?: string[];
+  recommendations?: IEventCard[];
 }

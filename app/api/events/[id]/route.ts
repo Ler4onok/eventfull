@@ -21,8 +21,21 @@ export async function GET(
       }
     });
 
+    const recommendations = await prisma.event.findMany({
+      where: {
+        event_to_category: {
+          some: {
+            categories: {
+              title: dbEvent?.event_to_category[0].categories.title
+            }
+          }
+        }
+      },
+      take: 4
+    });
+
     // todo: find better solution for many to many relation handling
-    const event = {...dbEvent, categories: dbEvent?.event_to_category.map(eventCategory => eventCategory.categories.title)}
+    const event = {...dbEvent, categories: dbEvent?.event_to_category.map(eventCategory => eventCategory.categories.title), recommendations: recommendations}
     return NextResponse.json(event)
   } catch (error) {
     return NextResponse.json({

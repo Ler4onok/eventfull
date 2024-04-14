@@ -16,6 +16,7 @@ import { EOrientation } from "@/types/enums";
 // mock data
 import { events } from "@/app/events";
 import { Loader } from "@/components/Loader";
+import { IEventCard } from "@/types/interfaces";
 
 const Event = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const Event = () => {
     const getEvent = async (eventId: number) => {
       const res = await fetch(`/api/events/${eventId}`);
       const event = await res.json();
-      setLoading(false)
+      setLoading(false);
       setEvent(event);
     };
 
@@ -57,27 +58,33 @@ const Event = () => {
         title={event.title}
         categories={event.categories}
       />
-       {loading ? <Loader /> :
-       <>
-      <Section>
-        <EventDetails eventDetails={eventDetails} />
-      </Section>
-      <Section>
-        <div className="flex items-start justify-start gap-6">
-          <Button text="Back" icon={<ArrowBackIcon />} onClick={onBackClick} />
-          <p>{event.description}</p>
-        </div>
-      </Section>
-      <Separator orientation={EOrientation.HORIZONTAL} />
-      <Section name="You may also like">
-        {/* todo: introduce api endpoint to get events with the same category */}
-        <div className="flex items-center justify-center gap-4">
-          {/* {events.slice(0, 4).map((event) => {
-            return <EventCard {...event} key={event.id} />;
-          })} */}
-        </div>
-      </Section>
-      </>}
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Section>
+            <EventDetails eventDetails={eventDetails} />
+          </Section>
+          <Section>
+            <div className="flex items-start justify-start gap-6">
+              <Button
+                text="Back"
+                icon={<ArrowBackIcon />}
+                onClick={onBackClick}
+              />
+              <p>{event.description}</p>
+            </div>
+          </Section>
+          <Separator orientation={EOrientation.HORIZONTAL} />
+          <Section name="You may also like">
+            <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8">
+              {event.recommendations.map((event: IEventCard) => {
+                return <EventCard {...event} key={event.id} />;
+              })}
+            </div>
+          </Section>
+        </>
+      )}
     </>
   );
 };
