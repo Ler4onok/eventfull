@@ -1,19 +1,20 @@
 import prisma from "@/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const EVENTS_PER_PAGE = 2;
+export const dynamic = "force-dynamic";
+
+const EVENTS_PER_PAGE = 3;
 
 export async function GET(req: NextRequest) {
   try {
-    // console.log({r: req.url})
-    // const { searchParams } = new URL(req.url);
-    // console.log({ searchParams });
+    const page = req.nextUrl.searchParams.get("page");
+    const pageIndex = page ? parseInt(page) : 0;
+    
     // 0 in case of the first page
-    // const page = Number(searchParams.get("page")) || 0;
 
     const dbEvents = await prisma.event.findMany({
-      // skip: page * EVENTS_PER_PAGE,
-      // take: EVENTS_PER_PAGE,
+      skip: pageIndex * EVENTS_PER_PAGE,
+      take: EVENTS_PER_PAGE,
       include: {
         event_to_category: {
           include: {
@@ -34,6 +35,7 @@ export async function GET(req: NextRequest) {
     });
     return NextResponse.json(events);
   } catch (error) {
+    console.log("error", error);
     return NextResponse.json(error);
   } finally {
     await prisma.$disconnect();
