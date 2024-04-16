@@ -59,7 +59,7 @@ const Event = () => {
         categories={event.categories}
       />
       {loading ? (
-        <Loader />
+        <Loader styles={{ container: "py-16" }} />
       ) : (
         <>
           <Section>
@@ -77,7 +77,7 @@ const Event = () => {
           </Section>
           <Separator orientation={EOrientation.HORIZONTAL} />
           <Section name="You may also like">
-            <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8">
+            <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8  pb-12">
               {event.recommendations.map((event: IEventCard) => {
                 return <EventCard {...event} key={event.id} />;
               })}

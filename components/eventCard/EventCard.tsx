@@ -5,6 +5,7 @@ import { IEventCard } from "@/types/interfaces";
 // compinents
 import { EventCardInfo } from "./EventCardInfo";
 import { formatDateTime } from "@/utils/formatDate";
+import { adjustTextSize } from "@/utils/adjustText";
 
 export const EventCard = ({
   id,
@@ -12,17 +13,20 @@ export const EventCard = ({
   startDate,
   location,
   imageLink,
-  categories
+  categories,
 }: IEventCard) => {
-  const {date} = formatDateTime(startDate);
-  const title = eventTitle.length > 50 ? eventTitle.slice(0, 50) + '...' : eventTitle;
+  const { date } = formatDateTime(startDate);
+
+  const title = adjustTextSize(eventTitle, window.innerWidth);
   const category = categories && categories[0];
 
   return (
     <Link href={`/events/${id}`}>
       <div className="max-w-md mx-auto bg-white overflow-hidden md:max-w-2xl m-4 h-[300px]">
         <div className="rounded-xl overflow-hidden relative">
-        <div className="absolute top-2 right-2 bg-white z-10 rounded-md text-brandPurple px-1">{category}</div>
+          <div className="absolute top-2 right-2 bg-white z-10 rounded-md text-brandPurple px-1">
+            {category}
+          </div>
           {imageLink && (
             <Image
               className="h-[200px] w-full object-cover rounded-xl transform transition-all duration-500 hover:scale-110 hover:rounded-xl"

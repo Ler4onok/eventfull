@@ -9,10 +9,9 @@ import { useEvents } from "@/hooks/useEvents";
 import { EventCard } from "./eventCard/EventCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader } from "./Loader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const dynamic = "force-dynamic";
-
 
 interface IIsValidProps {
   event: IEventCard;
@@ -69,7 +68,7 @@ const isValid = ({
 };
 
 export const EventList = () => {
-  const { events, fetchMore, loading } = useEvents();
+  const { events, totalEvents, fetchMore, loading } = useEvents();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -85,18 +84,7 @@ export const EventList = () => {
   const startDate = new Date(dates[0] as string);
   const endDate = dates.length > 1 ? new Date(dates[1] as string) : undefined;
 
-  const [items, setItems] = useState<IEventCard[]>([]);
   const [index, setIndex] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-
-  useEffect(() => {
-    if (Array.isArray(events)) {
-      const isLastPage =
-        events.length - items.length < 20 && events.length !== items.length;
-      setHasMore(!isLastPage);
-      setItems(events);
-    }
-  }, [events, hasMore, items]);
 
   const fetchData = () => {
     setIndex(index + 1);
@@ -104,24 +92,21 @@ export const EventList = () => {
     queryParams.set("page", index.toString());
     router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
 
-    // if (items.length > events.length) {
-    //   setHasMore(false);
-    //   return;
-    // }
     fetchMore(index);
   };
+
+  console.log(events, totalEvents, { a: totalEvents !== events.length });
 
   // todo: no events found
   // todo: change strategy of filtering
   // todo: implement normal pagination
   return (
     <>
-      {loading && <Loader />}
       <InfiniteScroll
-        dataLength={items.length}
+        dataLength={events.length}
         next={fetchData}
-        hasMore={hasMore}
-        loader={<Loader />}
+        hasMore={totalEvents !== events.length}
+        loader={<Loader styles={{ container: "pt-8" }} />}
         className="infinite-scroll-component"
       >
         <>
