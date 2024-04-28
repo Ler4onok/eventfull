@@ -9,9 +9,9 @@ import { useEvents } from "@/hooks/useEvents";
 import { EventCard } from "./eventCard/EventCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader } from "./Loader";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-export const dynamic = "force-dynamic";
+// todo: add debounce on filters
 
 interface IIsValidProps {
   event: IEventCard;
@@ -68,69 +68,93 @@ const isValid = ({
 };
 
 export const EventList = () => {
-  const { events, totalEvents, fetchMore, loading } = useEvents();
   const router = useRouter();
   const pathname = usePathname();
 
   const searchParams = useSearchParams();
   const queryParams = new URLSearchParams(searchParams);
-  const activeCategories = searchParams.get("categories")?.split(",");
-  const activeLocation = searchParams.get("location")?.split(",");
-  const activeDate = searchParams.get("date");
+  const activeCategories = useMemo(
+    () => searchParams.get("categories")?.split(","),
+    [searchParams.get("categories")]
+  );
+  const activeLocation = useMemo(
+    () => searchParams.get("location")?.split(","),
+    [searchParams.get("location")]
+  );
+  const activeDate = useMemo(
+    () => searchParams.get("date"),
+    [searchParams.get("date")]
+  );
   // todo: to fn
   const dates = activeDate?.includes("-")
     ? activeDate.split("-")
     : [activeDate];
-  const startDate = new Date(dates[0] as string);
+  const startDate = dates[0] ? new Date(dates[0] as string) : undefined;
   const endDate = dates.length > 1 ? new Date(dates[1] as string) : undefined;
 
-  const [index, setIndex] = useState(1);
+  const activeFilters = useMemo(
+    () => ({
+      activeCategories,
+      activeLocation,
+      activeDate: {
+        startDate,
+        endDate,
+      },
+    }),
+    [activeCategories, activeLocation, startDate, endDate]
+  );
 
-  const fetchData = () => {
-    setIndex(index + 1);
+  const { events, totalEvents, fetchMore, loading } = useEvents(activeFilters);
+  const [index, setIndex] = useState(1);
+  const hasMore = totalEvents !== events.length;
+
+  const fetchMoreEvents = () => {
+    hasMore ? setIndex(index + 1) : setIndex(index);
 
     queryParams.set("page", index.toString());
     router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
 
-    fetchMore(index);
+    fetchMore(activeFilters, index);
   };
 
-  console.log(events, totalEvents, { a: totalEvents !== events.length });
-
-  // todo: no events found
-  // todo: change strategy of filtering
-  // todo: implement normal pagination
   return (
     <>
-      <InfiniteScroll
-        dataLength={events.length}
-        next={fetchData}
-        hasMore={totalEvents !== events.length}
-        loader={<Loader styles={{ container: "pt-8" }} />}
-        className="infinite-scroll-component"
-      >
-        <>
-          {/* <div className="pt-4" >No events found</div> */}
-          <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
-            {/* todo: types */}
-            {Array.isArray(events) &&
-              events.map((event: any) => {
-                const isValidEvent = isValid({
-                  event,
-                  activeCategories,
-                  activeLocation,
-                  activeDate,
-                  startDate,
-                  endDate,
-                });
-                if (!isValidEvent) {
-                  return null;
-                }
-                return <EventCard key={event.id} {...event} />;
-              })}
-          </div>
-        </>
-      </InfiniteScroll>
+      {events.length === 0 && !loading && (
+        <div className="pt-4">No events found</div>
+      )}
+      {loading ? (
+        <Loader styles={{ container: "pt-8" }} />
+      ) : (
+        <InfiniteScroll
+          dataLength={events.length}
+          next={fetchMoreEvents}
+          hasMore={hasMore}
+          loader={<Loader styles={{ container: "pt-8" }} />}
+          className="infinite-scroll-component"
+        >
+          <>
+            {/* <div className="pt-4" >No events found</div> */}
+            <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
+              {/* todo: types */}
+              {Array.isArray(events) &&
+                events.map((event: any) => {
+                  const isValidEvent = isValid({
+                    event,
+                    activeCategories,
+                    activeLocation,
+                    activeDate,
+                    startDate,
+                    endDate,
+                  });
+                  if (!isValidEvent) {
+                    return null;
+                  }
+                  return <EventCard key={event.id} {...event} />;
+                })}
+            </div>
+          </>
+        </InfiniteScroll>
+      )}
     </>
   );
 };
