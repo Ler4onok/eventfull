@@ -1,56 +1,30 @@
 import { IEventCard } from "@/types/interfaces";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-export const useEvents = (filters) => {
+export const useEvents = () => {
   const [events, setEvents] = useState<IEventCard[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
-  const totalEventsRef = useRef();
 
+ 
   useEffect(() => {
-    const fetchData = async (activeFilters) => {
-      setLoading(true);
-      const categories = activeFilters.activeCategories;
-      const location = activeFilters.activeLocation;
-      // todo: process date
-      const date = undefined;
-      // JSON.stringify(activeFilters.activeDate);
-
-      const res = await fetch(
-        `/api/?${categories ? `&categories=${categories}` : ""}${
-          location ? `&location=${location}` : ""
-        }${date ? `&date=${date}` : ""}`
-      );
-
-      const data = await res.json();
-
+    const fetchData = async () => {
+      const res = await fetch("/api/");
+      const {events, categories} = await res.json();
       setLoading(false);
-
-      totalEventsRef.current = data.totalEvents;
-      setEvents(data.events);
+      setEvents(events);
+      setCategories(categories);
     };
 
-    fetchData(filters);
-  }, [filters]);
+    fetchData();
+  }, []);
 
-  const fetchMore = async (activeFilters, page: number) => {
-    const categories = activeFilters.activeCategories;
-    const location = activeFilters.activeLocation;
-    const date = undefined;
-
-    const isFiltersApplied = categories || location || date;
-
-    const res = await fetch(
-      `/api/${categories ? `?categories=${categories}` : ""}${
-        location ? `&location=${location}` : ""
-      }${date ? `&date=${date}` : ""}${
-        page ? `${isFiltersApplied ? "" : "?"}&page=${page}` : ""
-      }`
-    );
-
+  const fetchMore = async (page: number) => {
+    const res = await fetch(`/api/?page=${page}`);
     const data = await res.json();
-    setEvents([...events, ...data.events]);
-  };
+    setEvents([...events, ...data]);
+  }
   // setEvents(events);
   // } catch (err) {
   //   setError(true);
@@ -58,11 +32,5 @@ export const useEvents = (filters) => {
   //   setLoading(false);
   // }
 
-  return {
-    events,
-    totalEvents: totalEventsRef.current,
-    loading,
-    error,
-    fetchMore,
-  };
+  return { events, categories, loading, error, fetchMore };
 };

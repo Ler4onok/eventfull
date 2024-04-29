@@ -2,7 +2,15 @@ import { BetterDropdown } from "../BetterDropdown";
 // icons
 import { LocationIcon } from "../icons/LocationIcon";
 
-const options = ["Funchal", "Ponto do Sol", "Porto Moniz"];
+const options = [
+  "Funchal",
+  "Ponto do Sol",
+  "Porto Moniz",
+  "Calheta",
+  "Machico",
+  "São Vicente",
+  "Santana",
+];
 
 export const LocationFilter = () => {
   return (
@@ -12,7 +20,7 @@ export const LocationFilter = () => {
         options={options}
         icon={<LocationIcon className="mr-1" />}
         paramType="location"
-        styles={{button: 'p-2'}}
+        styles={{ button: "p-2" }}
       />
     </div>
   );

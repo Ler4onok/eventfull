@@ -5,6 +5,7 @@ import { Banner } from "@/components/banner/Banner";
 import { EventList } from "@/components/EventList";
 import { Filters } from "@/components/filters/Filters";
 import { Section } from "@/components/Section";
+import { useEvents } from "@/hooks/useEvents";
 
 
 // todo: change
@@ -13,12 +14,14 @@ const homeImage =
 const homeTitle = "Let your life be eventfull";
 
 export default function Home() {
+  const { events, loading, categories } = useEvents();
+
   return (
     <>
       <Banner image={homeImage} title={homeTitle} />
       <Section styles="pb-16">
-        <Filters />
-        <EventList />
+        <Filters categories={categories} />
+        <EventList events={events} loading={loading}/>
       </Section>
     </>
   );

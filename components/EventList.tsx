@@ -1,17 +1,11 @@
 "use client";
 
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 // types
 import type { IEventCard } from "@/types/interfaces";
-// hooks
-import { useEvents } from "@/hooks/useEvents";
 // components
 import { EventCard } from "./eventCard/EventCard";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader } from "./Loader";
-import { useMemo, useState } from "react";
-
-// todo: add debounce on filters
 
 interface IIsValidProps {
   event: IEventCard;
@@ -67,94 +61,41 @@ const isValid = ({
   return true;
 };
 
-export const EventList = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-
+export const EventList = ({events, loading}: {events: any, loading: boolean}) => {
   const searchParams = useSearchParams();
   const queryParams = new URLSearchParams(searchParams);
-  const activeCategories = useMemo(
-    () => searchParams.get("categories")?.split(","),
-    [searchParams.get("categories")]
-  );
-  const activeLocation = useMemo(
-    () => searchParams.get("location")?.split(","),
-    [searchParams.get("location")]
-  );
-  const activeDate = useMemo(
-    () => searchParams.get("date"),
-    [searchParams.get("date")]
-  );
+  const activeCategories = searchParams.get("categories")?.split(",");
+  const activeLocation = searchParams.get("location")?.split(",");
+  const activeDate = searchParams.get("date");
   // todo: to fn
   const dates = activeDate?.includes("-")
     ? activeDate.split("-")
     : [activeDate];
-  const startDate = dates[0] ? new Date(dates[0] as string) : undefined;
+  const startDate = new Date(dates[0] as string);
   const endDate = dates.length > 1 ? new Date(dates[1] as string) : undefined;
-
-  const activeFilters = useMemo(
-    () => ({
-      activeCategories,
-      activeLocation,
-      activeDate: {
-        startDate,
-        endDate,
-      },
-    }),
-    [activeCategories, activeLocation, startDate, endDate]
-  );
-
-  const { events, totalEvents, fetchMore, loading } = useEvents(activeFilters);
-  const [index, setIndex] = useState(1);
-  const hasMore = totalEvents !== events.length;
-
-  const fetchMoreEvents = () => {
-    hasMore ? setIndex(index + 1) : setIndex(index);
-
-    queryParams.set("page", index.toString());
-    router.push(`${pathname}?${queryParams.toString()}`, { scroll: false });
-
-    fetchMore(activeFilters, index);
-  };
 
   return (
     <>
-      {events.length === 0 && !loading && (
-        <div className="pt-4">No events found</div>
-      )}
-      {loading ? (
-        <Loader styles={{ container: "pt-8" }} />
-      ) : (
-        <InfiniteScroll
-          dataLength={events.length}
-          next={fetchMoreEvents}
-          hasMore={hasMore}
-          loader={<Loader styles={{ container: "pt-8" }} />}
-          className="infinite-scroll-component"
-        >
-          <>
-            {/* <div className="pt-4" >No events found</div> */}
-            <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
-              {/* todo: types */}
-              {Array.isArray(events) &&
-                events.map((event: any) => {
-                  const isValidEvent = isValid({
-                    event,
-                    activeCategories,
-                    activeLocation,
-                    activeDate,
-                    startDate,
-                    endDate,
-                  });
-                  if (!isValidEvent) {
-                    return null;
-                  }
-                  return <EventCard key={event.id} {...event} />;
-                })}
-            </div>
-          </>
-        </InfiniteScroll>
-      )}
+      {loading && <Loader />}
+      <>
+        <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
+          {/* todo: types */}
+          {events.map((event: any) => {
+            const isValidEvent = isValid({
+              event,
+              activeCategories,
+              activeLocation,
+              activeDate,
+              startDate,
+              endDate,
+            });
+            if (!isValidEvent) {
+              return null;
+            }
+            return <EventCard key={event.id} {...event} />;
+          })}
+        </div>
+      </>
     </>
   );
 };

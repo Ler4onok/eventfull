@@ -38,7 +38,7 @@ const Event = () => {
   }, [id]);
 
   const onBackClick = () => {
-    router.back();
+    router.push('/');
   };
 
   // todo: startDate and end_date change in schema

@@ -3,13 +3,14 @@ import { BetterDropdown } from "../BetterDropdown";
 import { Chip } from "../Chip";
 
 // todo: fetch categories
-const categories = ["Music", "Sports", "Arts", "Festivals"];
 
-export const CategoriesFilter = () => {
+export const CategoriesFilter = ({categories}: {categories: string[]}) => {
+  const chipsCategories = categories.slice(0, 3);
+  const dropdownCategories = categories.slice(3);
   // todo: change key to category.id
   return (
     <div className="flex items-stretch justify-start gap-2 flex-wrap h-full">
-      {categories.map((category, index) => {
+      {chipsCategories.map((category, index) => {
         return (
           <Chip
             key={index}
@@ -25,7 +26,7 @@ export const CategoriesFilter = () => {
 
       <BetterDropdown
         label="More"
-        options={["Business", "Gastronomy", "Christmas"]}
+        options={dropdownCategories}
         paramType="categories"
       />
     </div>
