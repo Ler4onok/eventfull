@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     // todo: remove then
-    domains: ["cdn-icons-png.flaticon.com", "eventsmadeira.com", 'img.evbuc.com'],
+    domains: ["cdn-icons-png.flaticon.com", "eventsmadeira.com", 'img.evbuc.com', 'images.unsplash.com'],
   },
 };
 

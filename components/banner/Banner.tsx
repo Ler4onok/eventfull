@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Overlay } from "../Overlay";
 import { Navbar } from "./Navbar";
 import { Slogan } from "./Slogan";
@@ -10,17 +11,18 @@ interface IBannerProps {
 
 export const Banner = ({ image, title, categories }: IBannerProps) => {
   return (
-    <div className="w-full h-[32rem]">
-      <div
+    <div className="relative w-full h-[32rem]">
+      <Image
+        src={image}
+        alt="Banner image"
+        layout="fill"
+        objectFit="cover"
         className="banner relative w-full h-full bg-bottom bg-cover"
-        style={{
-          backgroundImage: `url(${image})`,
-        }}
-      >
-        <Navbar />
-        <Slogan title={title} categories={categories}/>
-        <Overlay />
-      </div>
+        priority
+      />
+      <Navbar />
+      <Slogan title={title} categories={categories}/>
+      <Overlay />
     </div>
   );
 };
