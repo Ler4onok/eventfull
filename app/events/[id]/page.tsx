@@ -78,7 +78,7 @@ const Event = () => {
           <Separator orientation={EOrientation.HORIZONTAL} />
           <Section name="You may also like">
             <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8  pb-12">
-              {event.recommendations.map((event: IEventCard) => {
+              {event.recommendations?.map((event: IEventCard) => {
                 return <EventCard {...event} key={event.id} />;
               })}
             </div>

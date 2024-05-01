@@ -41,7 +41,7 @@ Pick<IDropdown, "label" | "options" | "icon" | "paramType" | "styles">) => {
           </button>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent className="w-56 max-h-[200px] overflow-auto">
         {options.map((option, index) => {
           return (
             <DropdownMenuCheckboxItem

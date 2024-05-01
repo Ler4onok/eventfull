@@ -73,7 +73,7 @@ export const EventDetails = ({ eventDetails }: TEventDetails) => {
       {details.map(({ id, text, url, icon }, index) => (
         <div key={id} className="flex justify-center items-center gap-2">
           <EventDetail text={text} url={url} icon={icon}/>
-          {index + 1 !== details.length && (
+          {index + 1 !== details.length && text && (
             <Separator orientation={EOrientation.VERTICAL} />
           )}
         </div>

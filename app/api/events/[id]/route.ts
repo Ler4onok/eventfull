@@ -15,28 +15,38 @@ export async function GET(
       include: {
         event_to_category: {
           include: {
-            categories: true // Include the categories related to the event_to_category
-          }
-        }
-      }
+            categories: true, // Include the categories related to the event_to_category
+          },
+        },
+      },
     });
+
+    const noCategories = dbEvent?.event_to_category.length === 0;
 
     const recommendations = await prisma.event.findMany({
       where: {
         event_to_category: {
           some: {
             categories: {
-              title: dbEvent?.event_to_category[0].categories.title
-            }
-          }
-        }
+              title: noCategories
+                ? "Other"
+                : dbEvent?.event_to_category[0].categories.title,
+            },
+          },
+        },
       },
-      take: 4
+      take: 4,
     });
 
+    const categories = noCategories
+      ? []
+      : dbEvent?.event_to_category.map(
+          (eventCategory) => eventCategory.categories.title
+        );
+
     // todo: find better solution for many to many relation handling
-    const event = {...dbEvent, categories: dbEvent?.event_to_category.map(eventCategory => eventCategory.categories.title), recommendations: recommendations}
-    return NextResponse.json(event)
+    const event = { ...dbEvent, categories, recommendations };
+    return NextResponse.json(event);
   } catch (error) {
     return NextResponse.json({
       error: "An error occurred while fetching the event",

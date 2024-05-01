@@ -19,6 +19,9 @@ export async function GET(req: NextRequest) {
           },
         },
       },
+      orderBy: {
+        startDate: 'asc',
+      },
     });
 
     const dbCategories = await prisma.category.findMany();
