@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 // components
 import { Button } from "@/components/Button";
-import { EventDetails, IEventDetails } from "@/components/EventDetails";
+import { EventDetails, IEventDetails } from "@/components/eventDetail/EventDetails";
 import { Section } from "@/components/Section";
 import { Separator } from "@/components/Separator";
 import { Banner } from "@/components/banner/Banner";
@@ -38,7 +38,7 @@ const Event = () => {
   }, [id]);
 
   const onBackClick = () => {
-    router.push('/');
+    router.push("/");
   };
 
   // todo: startDate and end_date change in schema
@@ -68,6 +68,7 @@ const Event = () => {
           <Section>
             <div className="flex items-start justify-start gap-6">
               <Button
+                styles="hidden sm:block"
                 text="Back"
                 icon={<ArrowBackIcon />}
                 onClick={onBackClick}

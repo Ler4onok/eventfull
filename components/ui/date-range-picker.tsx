@@ -252,7 +252,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
   );
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 flex-wrap">
       <div className="flex gap-2">
         {PRESETS.map((preset) => (
           <PresetButton

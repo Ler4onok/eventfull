@@ -33,7 +33,7 @@ Pick<IDropdown, "label" | "options" | "icon" | "paramType" | "styles">) => {
         <div>
           <button
             type="button"
-            className={`flex justify-start items-center h-full rounded-md border px-2 py-2text-sm hover:bg-gray-100 ${styles?.button}`}
+            className={`flex justify-start items-center h-full min-h-[38px] rounded-md border px-2 py-2text-sm hover:bg-gray-100 ${styles?.button}`}
           >
             {icon && icon}
             {label}

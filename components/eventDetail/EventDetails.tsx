@@ -1,7 +1,7 @@
 import { EOrientation } from "@/types/enums";
 // components
 import { EventDetail } from "./EventDetail";
-import { Separator } from "./Separator";
+import { Separator } from "../Separator";
 // icons
 import { IoIosPricetag as PriceIcon } from "react-icons/io";
 import { FaClock as TimeIcon } from "react-icons/fa6";
@@ -11,8 +11,7 @@ import { IoLocation as LocationIcon } from "react-icons/io5";
 import { FaExternalLinkSquareAlt as UrlIcon } from "react-icons/fa";
 // utils
 import { formatDateTime } from "@/utils/formatDate";
-
-
+import { DetailsGroup } from "./DetailsGroup";
 
 export interface IEventDetails {
   startDatetime: string;
@@ -23,12 +22,21 @@ export interface IEventDetails {
 }
 
 type TEventDetails = { eventDetails: IEventDetails };
+
+export interface IEventDetail {
+  id: string;
+  text: string | null;
+  url?: string;
+  icon?: React.ReactNode;
+  link?: string;
+}
+
 export const EventDetails = ({ eventDetails }: TEventDetails) => {
   const { startDatetime, price, location, address, link } = eventDetails;
 
   const { date, time } = formatDateTime(startDatetime, true);
 
-  const details = [
+  const details: IEventDetail[] = [
     {
       id: "date",
       text: date,
@@ -62,22 +70,22 @@ export const EventDetails = ({ eventDetails }: TEventDetails) => {
     },
     {
       id: "url",
-      text: link && link.length > 24 ? link.slice(0, 24) + '...' : link,
+      text: link && link.length > 24 ? link.slice(0, 24) + "..." : link,
       link,
       url: link,
       icon: <UrlIcon />,
     },
   ];
+
+  const firstGroup = details.slice(0, 2);
+  const secondGroup = details.slice(2, 5);
+  const thirdGroup = details.slice(5, 6);
+
   return (
-    <div className="flex justify-center items-center gap-2">
-      {details.map(({ id, text, url, icon }, index) => (
-        <div key={id} className="flex justify-center items-center gap-2">
-          <EventDetail text={text} url={url} icon={icon}/>
-          {index + 1 !== details.length && text && (
-            <Separator orientation={EOrientation.VERTICAL} />
-          )}
-        </div>
-      ))}
+    <div className="flex justify-center items-center gap-2 flex-col md:flex-row">
+      <DetailsGroup details={firstGroup} />
+      <DetailsGroup details={secondGroup} />
+      <DetailsGroup details={thirdGroup} />
     </div>
   );
 };

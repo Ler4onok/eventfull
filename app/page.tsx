@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <>
-      <Banner image={homeImage} title={homeTitle} />
+    <Banner image={homeImage} title={homeTitle} />
       <Section styles="pb-16">
         <Filters categories={categories} />
         <EventList events={events} loading={loading}/>

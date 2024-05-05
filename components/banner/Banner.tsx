@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 import { Overlay } from "../Overlay";
 import { Navbar } from "./Navbar";
 import { Slogan } from "./Slogan";
@@ -14,14 +14,18 @@ export const Banner = ({ image, title, categories }: IBannerProps) => {
     <div className="relative w-full h-[32rem]">
       <Image
         src={image}
-        alt="Banner image"
+        alt=""
         layout="fill"
         objectFit="cover"
         className="banner relative w-full h-full bg-bottom bg-cover"
+        objectPosition="bottom"
+        quality={70}
+        // blurDataURL={image}
+        // placeholder="blur"
         priority
       />
       <Navbar />
-      <Slogan title={title} categories={categories}/>
+      <Slogan title={title} categories={categories} />
       <Overlay />
     </div>
   );
