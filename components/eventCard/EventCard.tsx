@@ -5,12 +5,10 @@ import { IEventCard } from "@/types/interfaces";
 // compinents
 import { EventCardInfo } from "./EventCardInfo";
 import { formatDateTime } from "@/utils/formatDate";
-import { adjustTextSize } from "@/utils/adjustText";
-import { isClient } from "@/app/consts";
 
 export const EventCard = ({
   id,
-  title: eventTitle,
+  title,
   startDate,
   location,
   imageLink,
@@ -18,9 +16,6 @@ export const EventCard = ({
 }: IEventCard) => {
   const { date } = formatDateTime(startDate);
 
-  const title = isClient
-    ? adjustTextSize(eventTitle, window.innerWidth)
-    : eventTitle;
   const category = categories && categories[0];
 
   return (

@@ -1,6 +1,7 @@
 import { IEventCard } from "@/types/interfaces";
 import { useEffect, useState } from "react";
 
+// remove due to SSR
 export const useEvents = () => {
   const [events, setEvents] = useState<IEventCard[]>([]);
   const [categories, setCategories] = useState<string[]>([]);

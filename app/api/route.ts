@@ -1,4 +1,5 @@
 import prisma from "@/prisma/prisma";
+import { adjustTextSize } from "@/utils/adjustText";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
     const events = dbEvents.map((event) => {
       return {
         ...event,
+        title: adjustTextSize(event.title),
         categories: event.event_to_category.map(
           (eventCategory) => eventCategory.categories.title
         ),

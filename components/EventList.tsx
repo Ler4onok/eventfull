@@ -77,7 +77,7 @@ export const EventList = ({events, loading}: {events: any, loading: boolean}) =>
     <>
       {loading && <Loader />}
       <>
-        <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-10">
+        <div className="grid md:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-10">
           {/* todo: types */}
           {events.map((event: any) => {
             const isValidEvent = isValid({
