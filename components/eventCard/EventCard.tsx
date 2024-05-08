@@ -9,7 +9,7 @@ import { adjustTextSize } from "@/utils/adjustText";
 
 export const EventCard = ({
   id,
-  title: eventTitle,
+  title,
   startDate,
   location,
   imageLink,
@@ -17,7 +17,7 @@ export const EventCard = ({
 }: IEventCard) => {
   const { date } = formatDateTime(startDate);
 
-  const title = adjustTextSize(eventTitle, window.innerWidth);
+  // const title = adjustTextSize(eventTitle, window.innerWidth);
   const category = categories && categories[0];
 
   return (
