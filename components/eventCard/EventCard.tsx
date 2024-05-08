@@ -13,6 +13,7 @@ export const EventCard = ({
   location,
   imageLink,
   categories,
+  price
 }: IEventCard) => {
   const { date } = formatDateTime(startDate);
 
@@ -35,7 +36,7 @@ export const EventCard = ({
             />
           )}
         </div>
-        <EventCardInfo title={title} date={date} location={location} />
+        <EventCardInfo title={title} date={date} location={location} price={price}/>
       </div>
     </Link>
   );
