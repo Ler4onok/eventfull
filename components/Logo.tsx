@@ -1,15 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
+// png
+import logo from "../public/eventfull-logo-white-png-cropped.png";
 
+// todo: change to svg
 export const Logo = () => {
   return (
     <Link href="/">
-      {/* <Image
-              src="https://cdn-icons-png.flaticon.com/512/6608/6608901.png"
-              alt="Logo"
-              width={50}
-              height={50}
-            /> */}
-      LOGO
+      <Image src={logo} alt="Logo" width={100}/>
     </Link>
   );
 };

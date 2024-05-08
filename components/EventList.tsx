@@ -63,7 +63,6 @@ const isValid = ({
 
 export const EventList = ({events, loading}: {events: any, loading: boolean}) => {
   const searchParams = useSearchParams();
-  const queryParams = new URLSearchParams(searchParams);
   const activeCategories = searchParams.get("categories")?.split(",");
   const activeLocation = searchParams.get("location")?.split(",");
   const activeDate = searchParams.get("date");

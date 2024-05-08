@@ -18,7 +18,9 @@ export default async function Event({
 }: {
   params: { id: string };
 }) {
-  const eventData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`);
+  const eventData = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`
+  );
   const event = await eventData.json();
 
   // todo: startDate and end_date change in schema
@@ -44,7 +46,7 @@ export default async function Event({
       <Section>
         <div className="flex items-start justify-start gap-6">
           <Button
-            styles="hidden sm:block"
+            styles="hidden sm:flex"
             href="/"
             text="Back"
             icon={<ArrowBackIcon />}
@@ -54,12 +56,12 @@ export default async function Event({
       </Section>
       <Separator orientation={EOrientation.HORIZONTAL} />
       <Section name="You may also like">
-            <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8  pb-12">
-              {event.recommendations?.map((event: IEventCard) => {
-                return <EventCard {...event} key={event.id} />;
-              })}
-            </div>
-          </Section>
+        <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8  pb-12">
+          {event.recommendations?.map((event: IEventCard) => {
+            return <EventCard {...event} key={event.id} />;
+          })}
+        </div>
+      </Section>
     </>
   );
 }

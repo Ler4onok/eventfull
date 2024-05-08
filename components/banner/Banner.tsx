@@ -1,4 +1,5 @@
 import Image from "next/image";
+// components
 import { Overlay } from "../Overlay";
 import { Navbar } from "./Navbar";
 import { Slogan } from "./Slogan";
@@ -19,7 +20,7 @@ export const Banner = ({ image, title, categories }: IBannerProps) => {
         objectFit="cover"
         className="banner relative w-full h-full bg-bottom bg-cover"
         objectPosition="bottom"
-        quality={70}
+        // todo: compress images on server
         // blurDataURL={image}
         // placeholder="blur"
         priority
