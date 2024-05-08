@@ -28,7 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={`min-h-screen flex flex-col justify-between ${font.className}`}>
         {children}
         <Footer />
       </body>

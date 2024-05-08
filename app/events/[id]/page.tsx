@@ -1,5 +1,5 @@
 // components
-import { Button } from "@/components/Button";
+import { Button } from "@/components/buttons/Button";
 import {
   EventDetails,
   IEventDetails,
@@ -12,6 +12,7 @@ import { EventCard } from "@/components/eventCard/EventCard";
 // types
 import { EOrientation } from "@/types/enums";
 import { IEventCard } from "@/types/interfaces";
+import BackButton from "@/components/buttons/BackButton";
 
 export default async function Event({
   params: { id },
@@ -45,12 +46,7 @@ export default async function Event({
       </Section>
       <Section>
         <div className="flex items-start justify-start gap-6">
-          <Button
-            styles="hidden sm:flex"
-            href="/"
-            text="Back"
-            icon={<ArrowBackIcon />}
-          />
+          <BackButton styles="hidden sm:flex" />
           <p>{event.description}</p>
         </div>
       </Section>

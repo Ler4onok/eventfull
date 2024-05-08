@@ -1,4 +1,5 @@
 import prisma from "@/prisma/prisma";
+import { adjustTextSize } from "@/utils/adjustText";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -41,7 +42,7 @@ export async function GET(
     const categories = noCategories
       ? []
       : dbEvent?.event_to_category.map(
-          (eventCategory) => eventCategory.categories.title
+          (eventCategory) => adjustTextSize(eventCategory.categories.title)
         );
 
     // todo: find better solution for many to many relation handling
