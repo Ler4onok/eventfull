@@ -26,6 +26,9 @@ export async function GET(
 
     const recommendations = await prisma.event.findMany({
       where: {
+        NOT: {
+          id: Number(id), // Exclude the current event
+        },
         event_to_category: {
           some: {
             categories: {
