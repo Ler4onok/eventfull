@@ -10,7 +10,7 @@ const commonIconProps = {
 };
 
 export const EventCardInfo = ({ title, date, price: eventPrice }: TEventCardInfo) => {
-  const price = eventPrice ? eventPrice.length > 16 ? `${eventPrice?.substring(0, 16)}...` : null: 'Free';
+  const price = eventPrice ? eventPrice.length > 16 ? `${eventPrice?.substring(0, 16)}...` : eventPrice: 'Free';
   return (
     <div className="py-4">
       <div className="text-sm font-bold text-xl h-14 overflow-hidden">{title}</div>

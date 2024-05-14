@@ -1,5 +1,4 @@
 // components
-import { Button } from "@/components/buttons/Button";
 import {
   EventDetails,
   IEventDetails,
@@ -7,7 +6,6 @@ import {
 import { Section } from "@/components/Section";
 import { Separator } from "@/components/Separator";
 import { Banner } from "@/components/banner/Banner";
-import { ArrowBackIcon } from "@/components/icons/ArrowBackIcon";
 import { EventCard } from "@/components/eventCard/EventCard";
 // types
 import { EOrientation } from "@/types/enums";
@@ -47,7 +45,7 @@ export default async function Event({
       <Section>
         <div className="flex items-start justify-start gap-6">
           <BackButton styles="hidden sm:flex" />
-          <p>{event.description}</p>
+          <p dangerouslySetInnerHTML={{ __html: event?.description }}></p>
         </div>
       </Section>
       <Separator orientation={EOrientation.HORIZONTAL} />
