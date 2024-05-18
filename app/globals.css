@@ -70,6 +70,11 @@
     background: linear-gradient(187deg, rgba(57, 0, 153, 0.8) 0%, rgba(255, 0, 84, 0.5) 100%);
 
   }
+
+  /* ::-webkit-file-upload-button,
+  ::file-selector-button {
+    display: none;
+  } */
 }
 
 @layer base {

@@ -25,6 +25,7 @@ const config = {
       // },
       colors: {
         brandPurple: 'rgb(68 2 178);', 
+        grey: 'rgb(155,163,175);',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

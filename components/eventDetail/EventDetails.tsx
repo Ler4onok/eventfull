@@ -1,7 +1,3 @@
-import { EOrientation } from "@/types/enums";
-// components
-import { EventDetail } from "./EventDetail";
-import { Separator } from "../Separator";
 // icons
 import { IoIosPricetag as PriceIcon } from "react-icons/io";
 import { FaClock as TimeIcon } from "react-icons/fa6";

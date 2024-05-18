@@ -26,3 +26,10 @@ export const formatDateTime = (
 
   return { date, time };
 };
+
+export const createDateFromString = (dateString: string): Date => {
+  const parts = dateString.split("/");
+  // Create a Date object directly from the parts
+  const dateObject = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+  return dateObject;
+};
