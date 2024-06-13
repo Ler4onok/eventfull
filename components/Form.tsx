@@ -20,6 +20,9 @@ export async function Form() {
     const organizer = formData.get("organizer") as string;
     const startDate = formData.get("startDate") as string;
     const endDate = formData.get("endDate") as string;
+    const formCategories = formData.get("category") as string;
+
+    const categories = formCategories.split(",");
 
     const blob = await put(imageFile.name, imageFile, {
       access: "public",
@@ -40,6 +43,11 @@ export async function Form() {
         // todo: add approved field for admin
         sourceLink: "sourceLink",
         sourceId: 1,
+        event_to_category: {
+          create: [
+            { categories: { create: { title: categories[0] } } },
+          ],
+        },
       },
     });
   }
@@ -53,8 +61,11 @@ export async function Form() {
     { name: "location", placeholder: "Event location" },
     { name: "price", placeholder: "Event price" },
     { name: "organizer", placeholder: "Event organizer" },
+    // todo: use datepicker here
     { name: "startDate", placeholder: "Event start date (format: xx/xx/xxxx)" },
     { name: "endDate", placeholder: "Event end date (format: xx/xx/xxxx)" },
+    // todo: use select here
+    {name: "category", placeholder: "Event category"}
   ];
 
   return (

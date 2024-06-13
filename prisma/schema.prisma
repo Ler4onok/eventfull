@@ -1,64 +1,86 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["nApi"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Event {
-  id                Int         @id @default(autoincrement())
-  title             String      @map("title") @db.VarChar(256)
-  sourceLink        String      @map("source_link") @db.VarChar(256)
-  sourceId          Int         @map("source_id")
-  description       String?     @map("description")
-  shortDescription  String?     @map("short_description")
-  location          String?     @map("location") @db.VarChar(256)
-  address           String?     @map("address") @db.VarChar(256)
-  startDate         DateTime?   @map("start_date")
-  endDate           DateTime?   @map("end_date")
-  price             String?     @map("price") @db.VarChar(256)
-  imageLink         String?     @map("image_link") @db.VarChar(256)
-  organizer         String?     @map("organizer") @db.VarChar(256)
-  source            Source      @relation(fields: [sourceId], references: [id])
-  lastInsertedAt    DateTime    @map("last_inserted_at") @default(now())
-  lastUpdatedAt     DateTime    @map("last_updated_at") @updatedAt @default(now())
-  event_to_category EventToCategory[] // virtual relation field
+  id                Int               @id @default(autoincrement())
+  title             String            @map("title") @db.VarChar(256)
+  sourceLink        String            @map("source_link") @db.VarChar(256)
+  sourceId          Int               @map("source_id")
+  description       String?           @map("description")
+  shortDescription  String?           @map("short_description")
+  location          String?           @map("location") @db.VarChar(256)
+  address           String?           @map("address") @db.VarChar(256)
+  startDate         DateTime?         @map("start_date")
+  endDate           DateTime?         @map("end_date")
+  price             String?           @map("price") @db.VarChar(256)
+  imageLink         String?           @map("image_link") @db.VarChar(256)
+  organizer         String?           @map("organizer") @db.VarChar(256)
+  lastInsertedAt    DateTime          @default(now()) @map("last_inserted_at")
+  lastUpdatedAt     DateTime          @default(now()) @updatedAt @map("last_updated_at")
+  source            Source            @relation(fields: [sourceId], references: [id])
+  event_to_category EventToCategory[]
 
   @@map("event")
 }
 
 model Source {
-  id                Int         @id @default(autoincrement())
-  title             String      @map("title") @db.VarChar(256)
-  link              String      @map("link") @db.VarChar(256)
-  type              String      @map("type") @db.VarChar(256)
-  events            Event[]
-  lastInsertedAt    DateTime    @map("last_inserted_at") @default(now())
-  lastUpdatedAt     DateTime    @map("last_updated_at") @updatedAt @default(now())
+  id             Int      @id @default(autoincrement())
+  title          String   @map("title") @db.VarChar(256)
+  link           String   @map("link") @db.VarChar(256)
+  type           String   @map("type") @db.VarChar(256)
+  lastInsertedAt DateTime @default(now()) @map("last_inserted_at")
+  lastUpdatedAt  DateTime @default(now()) @updatedAt @map("last_updated_at")
+  events         Event[]
 
   @@map("source")
 }
 
 model Category {
-  id                Int         @id @default(autoincrement())
-  title             String      @map("title") @db.VarChar(256) @unique
-  lastInsertedAt    DateTime    @map("last_inserted_at") @default(now())
-  lastUpdatedAt     DateTime    @map("last_updated_at") @updatedAt @default(now())
-  event_to_category EventToCategory[] // virtual relation field
+  id                Int               @id @default(autoincrement())
+  title             String            @unique @map("title") @db.VarChar(256)
+  lastInsertedAt    DateTime          @default(now()) @map("last_inserted_at")
+  lastUpdatedAt     DateTime          @default(now()) @updatedAt @map("last_updated_at")
+  event_to_category EventToCategory[]
 
   @@map("category")
 }
 
 model EventToCategory {
-  event_id          Int 
-  category_id       Int 
-  events            Event       @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction) 
-  categories        Category    @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  event_id    Int
+  category_id Int
+  categories  Category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  events      Event    @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@unique([event_id, category_id], map: "event_id_category_id_unique")
   @@map("event_to_category")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model events {
+  id                BigInt?
+  title             String?
+  start_date        DateTime? @db.Timestamp(6)
+  end_date          DateTime? @db.Timestamp(6)
+  location          String?
+  categories        String?
+  address           String?
+  description       String?
+  short_description String?
+  source_link       String?
+  source_id         BigInt?
+  image_link        String?
+  organizer         String?
+  price             String?
+  last_inserted_at  DateTime? @db.Timestamp(6)
+  last_updated_at   DateTime? @db.Timestamp(6)
+
+  @@ignore
 }
