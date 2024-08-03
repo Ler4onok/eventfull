@@ -1,6 +1,5 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["nApi"]
 }
 
 datasource db {
@@ -61,26 +60,4 @@ model EventToCategory {
 
   @@unique([event_id, category_id], map: "event_id_category_id_unique")
   @@map("event_to_category")
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model events {
-  id                BigInt?
-  title             String?
-  start_date        DateTime? @db.Timestamp(6)
-  end_date          DateTime? @db.Timestamp(6)
-  location          String?
-  categories        String?
-  address           String?
-  description       String?
-  short_description String?
-  source_link       String?
-  source_id         BigInt?
-  image_link        String?
-  organizer         String?
-  price             String?
-  last_inserted_at  DateTime? @db.Timestamp(6)
-  last_updated_at   DateTime? @db.Timestamp(6)
-
-  @@ignore
 }
