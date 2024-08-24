@@ -6,12 +6,25 @@ export async function GET(req: NextRequest) {
   try {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(23, 59, 0, 0);
+    yesterday.setHours(0, 0, 0, 0);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const dbEvents = await prisma.event.findMany({
       where: {
-        startDate: {
-          gt: yesterday,
-        },
+        OR: [
+          {
+            startDate: {
+              gt: yesterday,
+            },
+          },
+          {
+            endDate: {
+              gt: today,
+            },
+          },
+        ],
       },
       include: {
         event_to_category: {
