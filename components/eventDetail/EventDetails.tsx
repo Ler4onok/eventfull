@@ -6,42 +6,46 @@ import { IoHome as AddressIcon } from "react-icons/io5";
 import { IoLocation as LocationIcon } from "react-icons/io5";
 import { FaExternalLinkSquareAlt as UrlIcon } from "react-icons/fa";
 // utils
-import { formatDateTime } from "@/utils/formatDate";
 import { DetailsGroup } from "./DetailsGroup";
-
-export interface IEventDetails {
-  startDatetime: string;
-  price: string | null;
-  location: string;
-  address: string | null;
-  link: string;
-}
-
-type TEventDetails = { eventDetails: IEventDetails };
+import { TEventDetails } from "@/app/events/[id]/page";
+import { Separator } from "../Separator";
+import { EOrientation } from "@/types/enums";
 
 export interface IEventDetail {
   id: string;
-  text: string | null;
+  text?: string | null;
   url?: string;
   icon?: React.ReactNode;
   link?: string;
 }
 
-export const EventDetails = ({ eventDetails }: TEventDetails) => {
-  const { startDatetime, price, location, address, link } = eventDetails;
+export const EventDetails = ({
+  eventDetails,
+}: {
+  eventDetails: TEventDetails;
+}) => {
+  const {
+    startDate,
+    endDate,
+    startTime,
+    address,
+    location,
+    sourceLink,
+    price,
+  } = eventDetails;
 
-  const { date, time } = formatDateTime(startDatetime, true);
+  const isSameDay = startDate === endDate;
 
   const details: IEventDetail[] = [
     {
       id: "date",
-      text: date,
+      text: `${startDate} ${endDate && !isSameDay ? "- " + endDate : ""}`,
       url: "",
       icon: <DateIcon />,
     },
     {
       id: "time",
-      text: time,
+      text: startTime,
       url: "",
       icon: <TimeIcon />,
     },
@@ -66,9 +70,12 @@ export const EventDetails = ({ eventDetails }: TEventDetails) => {
     },
     {
       id: "url",
-      text: link && link.length > 24 ? link.slice(0, 24) + "..." : link,
-      link,
-      url: link,
+      text:
+        sourceLink && sourceLink.length > 24
+          ? sourceLink.slice(0, 24) + "..."
+          : sourceLink,
+      link: sourceLink,
+      url: sourceLink,
       icon: <UrlIcon />,
     },
   ];
@@ -80,7 +87,9 @@ export const EventDetails = ({ eventDetails }: TEventDetails) => {
   return (
     <div className="flex justify-center items-center gap-2 flex-col md:flex-row">
       <DetailsGroup details={firstGroup} />
+      <Separator orientation={EOrientation.VERTICAL} />
       <DetailsGroup details={secondGroup} />
+      <Separator orientation={EOrientation.VERTICAL} />
       <DetailsGroup details={thirdGroup} />
     </div>
   );

@@ -1,16 +1,19 @@
 // components
-import {
-  EventDetails,
-  IEventDetails,
-} from "@/components/eventDetail/EventDetails";
+import { EventDetails } from "@/components/eventDetail/EventDetails";
 import { Section } from "@/components/Section";
 import { Separator } from "@/components/Separator";
 import { Banner } from "@/components/banner/Banner";
 import { EventCard } from "@/components/eventCard/EventCard";
 // types
 import { EOrientation } from "@/types/enums";
-import { IEventCard } from "@/types/interfaces";
+import { IEvent, IEventCard } from "@/types/interfaces";
 import BackButton from "@/components/buttons/BackButton";
+import { formatDateTime } from "@/utils/formatDate";
+
+export type TEventDetails = Pick<
+  IEvent,
+  "price" | "location" | "sourceLink" | "address"
+> & { startDate?: string; endDate?: string; startTime?: string };
 
 export default async function Event({
   params: { id },
@@ -20,39 +23,53 @@ export default async function Event({
   const eventData = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`
   );
-  const event = await eventData.json();
 
-  // todo: startDate and end_date change in schema
-  // todo: add end_date support
-  const eventDetails: IEventDetails = {
-    // date: `${event.startDate} ${event.endDate ? `- ${event.endDate}` : ''}`,
-    startDatetime: event.startDate,
-    price: event.price,
-    location: event.location,
-    address: event.address,
-    link: event.sourceLink,
+  const {
+    title,
+    startDate: startDateData,
+    endDate: endDateData,
+    price,
+    location,
+    address,
+    sourceLink,
+    imageLink,
+    categories,
+    description,
+    recommendations,
+  } = await eventData.json();
+
+  const { startDate, startTime, endDate } = formatDateTime({
+    startDate: startDateData,
+    endDate: endDateData,
+  });
+
+  const eventDetails: TEventDetails = {
+    startDate,
+    endDate,
+    startTime,
+    price,
+    location,
+    address,
+    sourceLink,
   };
+
   return (
     <>
-      <Banner
-        image={event.imageLink}
-        title={event.title}
-        categories={event.categories}
-      />
+      <Banner image={imageLink} title={title} categories={categories} />
       <Section>
         <EventDetails eventDetails={eventDetails} />
       </Section>
       <Section>
         <div className="flex items-start justify-start gap-6">
           <BackButton styles="hidden sm:flex" />
-          <p dangerouslySetInnerHTML={{ __html: event?.description }}></p>
+          <span dangerouslySetInnerHTML={{ __html: description }}></span>
         </div>
       </Section>
       <Separator orientation={EOrientation.HORIZONTAL} />
       <Section name="You may also like">
         <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8  pb-12">
-          {event.recommendations?.map((event: IEventCard) => {
-            return <EventCard {...event} key={event.id} />;
+          {recommendations?.map((event: IEventCard) => {
+            return <EventCard {...event} key={id} />;
           })}
         </div>
       </Section>

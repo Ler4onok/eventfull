@@ -9,13 +9,13 @@ import { formatDateTime } from "@/utils/formatDate";
 export const EventCard = ({
   id,
   title,
-  startDate,
+  startDate: startDateData,
   location,
   imageLink,
   categories,
-  price
+  price,
 }: IEventCard) => {
-  const { date } = formatDateTime(startDate);
+  const { startDate } = formatDateTime({ startDate: startDateData });
 
   const category = categories && categories[0];
 
@@ -36,7 +36,7 @@ export const EventCard = ({
             />
           )}
         </div>
-        <EventCardInfo title={title} date={date} location={location} price={price}/>
+        <EventCardInfo title={title} startDate={startDate} price={price} />
       </div>
     </Link>
   );
