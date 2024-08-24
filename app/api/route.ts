@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   try {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-
+    yesterday.setHours(23, 59, 0, 0);
     const dbEvents = await prisma.event.findMany({
       where: {
         startDate: {
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
         },
       },
       orderBy: {
-        startDate: 'asc',
+        startDate: "asc",
       },
     });
 
@@ -37,8 +37,8 @@ export async function GET(req: NextRequest) {
         ),
       };
     });
-    return NextResponse.json({events, categories});
-  } catch (error) {
+    return NextResponse.json({ events, categories });
+  } catch (error) { 
     return NextResponse.json(error);
   } finally {
     await prisma.$disconnect();

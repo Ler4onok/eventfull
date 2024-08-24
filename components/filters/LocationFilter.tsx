@@ -10,6 +10,10 @@ const options = [
   "Machico",
   "São Vicente",
   "Santana",
+  "Câmara de Lobos",
+  "Ribeira Brava",
+  "Santa Cruz",
+  "Porto Santo",
 ];
 
 export const LocationFilter = () => {

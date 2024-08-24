@@ -30,16 +30,14 @@ Pick<IDropdown, "label" | "options" | "icon" | "paramType" | "styles">) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div>
-          <button
-            type="button"
-            className={`flex justify-start items-center h-full min-h-[38px] rounded-md border px-2 py-2text-sm hover:bg-gray-100 ${styles?.button}`}
-          >
-            {icon && icon}
-            {label}
-            <ArrowDownIcon className="ml-1" />
-          </button>
-        </div>
+        <button
+          type="button"
+          className={`flex justify-start items-center h-full min-h-[38px] rounded-md border px-2 py-2text-sm hover:bg-gray-100 ${styles?.button}`}
+        >
+          {icon && icon}
+          {label}
+          <ArrowDownIcon className="ml-1" />
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 max-h-[200px] overflow-auto">
         {options.map((option, index) => {
