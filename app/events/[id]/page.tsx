@@ -1,3 +1,7 @@
+export const revalidate = 60
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
+
 // components
 import { EventDetails } from "@/components/eventDetail/EventDetails";
 import { Section } from "@/components/Section";
