@@ -20,7 +20,7 @@ model Event {
   startDate         DateTime?         @map("start_date")
   endDate           DateTime?         @map("end_date")
   price             String?           @map("price") @db.VarChar(256)
-  imageLink         String?           @map("image_link") @db.VarChar(256)
+  imageLink         String?           @map("image_link")
   organizer         String?           @map("organizer") @db.VarChar(256)
   lastInsertedAt    DateTime          @default(now()) @map("last_inserted_at")
   lastUpdatedAt     DateTime          @default(now()) @updatedAt @map("last_updated_at")
