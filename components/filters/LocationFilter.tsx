@@ -4,7 +4,7 @@ import { LocationIcon } from "../icons/LocationIcon";
 
 const options = [
   "Funchal",
-  "Ponto do Sol",
+  "Ponta do Sol",
   "Porto Moniz",
   "Calheta",
   "Machico",
