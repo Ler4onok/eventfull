@@ -1,4 +1,4 @@
-export const revalidate = 0; 
+export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
@@ -9,6 +9,10 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 // components
 import { Footer } from "@/components/Footer";
+// analytics
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
+import Head from "next/head";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -28,10 +32,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-      <body className={`min-h-screen flex flex-col justify-between ${font.className}`}>
+      <Head>
+        <title>Eventfull Madeira</title>
+        <link rel="canonical" href="https://evenfull-madeira.com" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        ></meta>
+      </Head>
+      <body
+        className={`min-h-screen flex flex-col justify-between ${font.className}`}
+      >
         {children}
         <Footer />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

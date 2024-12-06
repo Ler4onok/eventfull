@@ -1,6 +1,4 @@
-import Link from "next/link";
 // components
-import { Languages } from "../Languages";
 import { Logo } from "../Logo";
 import { Search } from "./Search";
 import { Links } from "./Links";
@@ -13,6 +11,7 @@ export const Navbar = () => {
       <div className="flex items-center justify-end gap-8">
         <Search />
         <Links />
+        {/* todo: add support of pt lang */}
         {/* <Languages /> */}
       </div>
     </nav>
