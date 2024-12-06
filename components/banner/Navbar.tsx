@@ -13,7 +13,7 @@ export const Navbar = () => {
       <div className="flex items-center justify-end gap-8">
         <Search />
         <Links />
-        <Languages />
+        {/* <Languages /> */}
       </div>
     </nav>
   );
