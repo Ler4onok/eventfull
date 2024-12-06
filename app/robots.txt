@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /server-sitemap-index.xml
+Allow: /
+
+Sitemap: https://eventfull-madeira.com/sitemap.xml
