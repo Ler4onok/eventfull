@@ -21,10 +21,11 @@ export const Banner = ({ image = homeImage, title = homeTitle, categories }: IBa
       <Image
         src={image}
         alt=""
+        // todo: remove deprecated props https://nextjs.org/docs/messages/next-image-upgrade-to-13
         layout="fill"
         objectFit="cover"
-        className="banner relative w-full h-full bg-bottom bg-cover"
         objectPosition="bottom"
+        className="banner relative w-full h-full bg-bottom bg-cover"
         // todo: compress images on server
         // blurDataURL={image}
         // placeholder="blur"

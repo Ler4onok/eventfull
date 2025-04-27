@@ -1,6 +1,6 @@
 import { Section } from "@/components/Section";
 import { Banner } from "@/components/banner/Banner";
-import BackButton from "@/components/buttons/BackButton";
+import { BackButton } from "@/components/buttons/BackButton";
 
 const Map = () => {
   return (

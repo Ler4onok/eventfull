@@ -1,7 +1,7 @@
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 // todo: read about fonts load optimization
 // fonts
 import { Poppins } from "next/font/google";
@@ -19,10 +19,32 @@ const font = Poppins({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-// todo: read about metadata
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: 'device-width'
+}
+
 export const metadata: Metadata = {
-  title: "Eventfull Madeira",
-  description: "Centralized event platform in Madeira",
+  title:
+    "Eventfull Madeira - Discover Events in Madeira | Festivals, Music, Sports & Culture",
+  description:
+    "Find the best events, festivals, concerts, and activities in Madeira! Eventfull Madeira makes it easy to explore what's happening around the island all year round.",
+  metadataBase: new URL('https://eventfull-madeira.com'),
+  openGraph: {
+    title:
+      "Eventfull Madeira - Discover Events in Madeira | Festivals, Music, Sports & Culture",
+    description:
+      "Explore events, festivals, concerts, and activities across Madeira Island.",
+    images: new URL("https://images.unsplash.com/photo-1567351344506-b2e8a94e273b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Eventfull Madeira - Discover Events in Madeira | Festivals, Music, Sports & Culture",
+    description:
+      "Find the best events, festivals, concerts, and activities in Madeira! Eventfull Madeira makes it easy to explore what's happening around the island all year round.",
+  },
+  robots: "index, follow",
 };
 
 export default function RootLayout({
@@ -33,12 +55,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <title>Eventfull Madeira</title>
-        <link rel="canonical" href="https://evenfull-madeira.com" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        ></meta>
+        <link rel="canonical" href='https://eventfull-madeira.com' />
+        <link rel="icon" href="/favicon_eventfull.png" sizes="any" />
       </Head>
       <body
         className={`min-h-screen flex flex-col justify-between ${font.className}`}

@@ -1,6 +1,6 @@
-export const revalidate = 60
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
+export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 // components
 import { EventDetails } from "@/components/eventDetail/EventDetails";
@@ -8,16 +8,47 @@ import { Section } from "@/components/Section";
 import { Separator } from "@/components/Separator";
 import { Banner } from "@/components/banner/Banner";
 import { EventCard } from "@/components/eventCard/EventCard";
+import { BackButton } from "@/components/buttons/BackButton";
 // types
 import { EOrientation } from "@/types/enums";
 import { IEvent, IEventCard } from "@/types/interfaces";
-import BackButton from "@/components/buttons/BackButton";
+// utils
 import { formatDateTime } from "@/utils/formatDate";
+// metadata
+import type { Metadata } from "next";
 
 export type TEventDetails = Pick<
   IEvent,
   "price" | "location" | "sourceLink" | "address"
 > & { startDate?: string; endDate?: string; startTime?: string };
+
+export async function generateMetadata({
+  params: { id },
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const { title, description, imageLink } = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`
+  ).then((res) => res.json());
+
+  return {
+    title: `${title} - Eventfull Madeira`,
+    description: description?.slice(0, 150),
+    openGraph: {
+      title: `${title} - Eventfull Madeira`,
+      description: description?.slice(0, 150),
+      images: new URL(imageLink!),
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/events/${id}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} - Eventfull Madeira`,
+      description: description?.slice(0, 150),
+      images: new URL(imageLink!),
+    },
+  };
+}
 
 export default async function Event({
   params: { id },
