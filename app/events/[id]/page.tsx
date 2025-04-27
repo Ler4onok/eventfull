@@ -27,12 +27,15 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const { title, description, imageLink } = await fetch(
+  const { title, description, imageLink, price, categories } = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`
   ).then((res) => res.json());
 
+  console.log("imageLink", price);
+
   return {
-    title: `${title} - Eventfull Madeira`,
+    title: `${title} - ${!price ? "Free, " : ""}${
+      categories ? categories.join(", ") : ""}, Madeira`,
     description: description?.slice(0, 150),
     openGraph: {
       title: `${title} - Eventfull Madeira`,

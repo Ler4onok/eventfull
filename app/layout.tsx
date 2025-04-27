@@ -26,23 +26,23 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title:
-    "Eventfull Madeira - Discover Events in Madeira | Festivals, Music, Sports & Culture",
+    "Eventfull - Discover events in Madeira",
   description:
-    "Find the best events, festivals, concerts, and activities in Madeira! Eventfull Madeira makes it easy to explore what's happening around the island all year round.",
+    "Find the best events, festivals, concerts, sports, and activities in Madeira! Eventfull Madeira makes it easy to explore what's happening around the island all year round.",
   metadataBase: new URL('https://eventfull-madeira.com'),
   openGraph: {
     title:
-      "Eventfull Madeira - Discover Events in Madeira | Festivals, Music, Sports & Culture",
+      "Eventfull - Discover events in Madeira",
     description:
-      "Explore events, festivals, concerts, and activities across Madeira Island.",
+      "Explore events, festivals, concerts, sports, and activities across Madeira Island.",
     images: new URL("https://images.unsplash.com/photo-1567351344506-b2e8a94e273b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
   },
   twitter: {
     card: "summary_large_image",
     title:
-      "Eventfull Madeira - Discover Events in Madeira | Festivals, Music, Sports & Culture",
+      "Eventfull - Discover events in Madeira",
     description:
-      "Find the best events, festivals, concerts, and activities in Madeira! Eventfull Madeira makes it easy to explore what's happening around the island all year round.",
+      "Find the best events, festivals, concerts, sports, and activities in Madeira! Eventfull Madeira makes it easy to explore what's happening around the island all year round.",
   },
   robots: "index, follow",
 };
