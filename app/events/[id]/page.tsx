@@ -31,11 +31,10 @@ export async function generateMetadata({
     `${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`
   ).then((res) => res.json());
 
-  console.log("imageLink", price);
-
   return {
     title: `${title} - ${!price ? "Free, " : ""}${
-      categories ? categories.join(", ") : ""}, Madeira`,
+      categories ? categories.join(", ") : ""
+    }, Madeira`,
     description: description?.slice(0, 150),
     openGraph: {
       title: `${title} - Eventfull Madeira`,
@@ -59,10 +58,6 @@ export default async function Event({
 }: {
   params: { id: string };
 }) {
-  const eventData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`
-  );
-
   const {
     title,
     startDate: startDateData,
@@ -75,7 +70,9 @@ export default async function Event({
     categories,
     description,
     recommendations,
-  } = await eventData.json();
+  } = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`).then(
+    (res) => res.json()
+  );
 
   const { startDate, startTime, endDate } = formatDateTime({
     startDate: startDateData,

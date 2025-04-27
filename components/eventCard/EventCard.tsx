@@ -2,15 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 // types
 import { IEventCard } from "@/types/interfaces";
-// compinents
+// components
 import { EventCardInfo } from "./EventCardInfo";
+// utils
 import { formatDateTime } from "@/utils/formatDate";
 
 export const EventCard = ({
   id,
   title,
   startDate: startDateData,
-  location,
   imageLink,
   categories,
   price,

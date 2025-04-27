@@ -24,6 +24,9 @@ const isValid = ({
   startDate,
   endDate,
 }: IIsValidProps) => {
+  if (!event.imageLink) {
+    return false;
+  }
   const containsElement = event.categories?.some((category: string) =>
     activeCategories?.includes(category)
   );
@@ -80,6 +83,7 @@ export const EventList = ({events, loading}: {events: any, loading: boolean}) =>
         <div className="grid md:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-10">
           {/* todo: types */}
           {events.map((event: any) => {
+            
             const isValidEvent = isValid({
               event,
               activeCategories,
