@@ -21,30 +21,30 @@ const font = Poppins({
 
 export const viewport: Viewport = {
   initialScale: 1,
-  width: 'device-width'
-}
+  width: "device-width",
+};
 
 export const metadata: Metadata = {
-  title:
-    "Eventfull - Discover events in Madeira",
+  title: "Eventfull - Discover events in Madeira",
   description:
     "Find the best events, festivals, concerts, sports, and activities in Madeira! Eventfull Madeira makes it easy to explore what's happening around the island all year round.",
-  metadataBase: new URL('https://eventfull-madeira.com'),
+  metadataBase: new URL("https://eventfull-madeira.com"),
   openGraph: {
-    title:
-      "Eventfull - Discover events in Madeira",
+    title: "Eventfull - Discover events in Madeira",
     description:
       "Explore events, festivals, concerts, sports, and activities across Madeira Island.",
-    images: new URL("https://images.unsplash.com/photo-1567351344506-b2e8a94e273b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+    images: new URL(
+      "https://images.unsplash.com/photo-1567351344506-b2e8a94e273b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    ),
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Eventfull - Discover events in Madeira",
+    title: "Eventfull - Discover events in Madeira",
     description:
       "Find the best events, festivals, concerts, sports, and activities in Madeira! Eventfull Madeira makes it easy to explore what's happening around the island all year round.",
   },
   robots: "index, follow",
+  icons: { icon: "/favicon_eventfull.png" },
 };
 
 export default function RootLayout({
@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <link rel="canonical" href='https://eventfull-madeira.com' />
+        <link rel="canonical" href="https://eventfull-madeira.com" />
         <link rel="icon" href="/favicon_eventfull.png" sizes="any" />
       </Head>
       <body

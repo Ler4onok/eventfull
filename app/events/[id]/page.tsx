@@ -50,6 +50,7 @@ export async function generateMetadata({
       description: description?.slice(0, 150),
       images: new URL(imageLink!),
     },
+    icons: { icon: "/favicon_eventfull.png" },
   };
 }
 
