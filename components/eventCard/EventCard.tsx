@@ -8,7 +8,7 @@ import { EventCardInfo } from "./EventCardInfo";
 import { formatDateTime } from "@/utils/formatDate";
 
 export const EventCard = ({
-  id,
+  slug,
   title,
   startDate: startDateData,
   imageLink,
@@ -20,7 +20,7 @@ export const EventCard = ({
   const category = categories && categories[0];
 
   return (
-    <Link href={`/events/${id}`}>
+    <Link href={`/events/${slug}`}>
       <div className="max-w-md mx-auto bg-white overflow-hidden md:max-w-2xl m-4 h-[300px]">
         <div className="rounded-xl overflow-hidden relative">
           <div className="absolute top-2 right-2 bg-white z-10 rounded-md text-brandPurple px-1">

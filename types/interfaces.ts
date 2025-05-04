@@ -45,6 +45,7 @@ type Category = {
 
 export interface IEventCard {
   id: number;
+  slug: string;
   title: string;
   startDate?: Date;
   endDate?: Date;

@@ -7,7 +7,7 @@ import { IoLocation as LocationIcon } from "react-icons/io5";
 import { FaExternalLinkSquareAlt as UrlIcon } from "react-icons/fa";
 // utils
 import { DetailsGroup } from "./DetailsGroup";
-import { TEventDetails } from "@/app/events/[id]/page";
+import { TEventDetails } from "@/app/events/[slug]/page";
 import { Separator } from "../Separator";
 import { EOrientation } from "@/types/enums";
 

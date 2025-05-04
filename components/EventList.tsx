@@ -95,7 +95,7 @@ export const EventList = ({events, loading}: {events: any, loading: boolean}) =>
             if (!isValidEvent) {
               return null;
             }
-            return <EventCard key={event.id} {...event} />;
+            return <EventCard key={event.slug} {...event} />;
           })}
         </div>
       </>

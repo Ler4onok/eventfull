@@ -23,12 +23,12 @@ export type TEventDetails = Pick<
 > & { startDate?: string; endDate?: string; startTime?: string };
 
 export async function generateMetadata({
-  params: { id },
+  params: { slug },
 }: {
-  params: { id: string };
+  params: { slug: string };
 }): Promise<Metadata> {
   const { title, description, imageLink, price, categories } = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/events/${slug}`
   ).then((res) => res.json());
 
   return {
@@ -40,7 +40,7 @@ export async function generateMetadata({
       title: `${title} - Eventfull Madeira`,
       description: description?.slice(0, 150),
       images: new URL(imageLink!),
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/events/${id}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/events/${slug}`,
       type: "website",
     },
     twitter: {
@@ -54,9 +54,9 @@ export async function generateMetadata({
 }
 
 export default async function Event({
-  params: { id },
+  params: { slug },
 }: {
-  params: { id: string };
+  params: { slug: string };
 }) {
   const {
     title,
@@ -70,7 +70,7 @@ export default async function Event({
     categories,
     description,
     recommendations,
-  } = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`).then(
+  } = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${slug}`).then(
     (res) => res.json()
   );
 
@@ -105,7 +105,7 @@ export default async function Event({
       <Section name="You may also like">
         <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8  pb-12">
           {recommendations?.map((event: IEventCard) => {
-            return <EventCard {...event} key={id} />;
+            return <EventCard {...event} key={slug} />;
           })}
         </div>
       </Section>

@@ -11,6 +11,7 @@ datasource db {
 model Event {
   id                Int               @id @default(autoincrement())
   title             String            @map("title") @db.VarChar(256)
+  slug              String?           @map("slug") @db.VarChar(256) @unique
   sourceLink        String            @map("source_link") @db.VarChar(256)
   sourceId          Int               @map("source_id")
   description       String?           @map("description")

@@ -4,14 +4,14 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: number } }
+  { params }: { params: { slug: string } }
 ) {
   try {
-    const { id } = params;
+    const { slug } = params;
 
     const dbEvent = await prisma.event.findUnique({
       where: {
-        id: Number(id),
+        slug,
       },
       include: {
         event_to_category: {
@@ -22,12 +22,14 @@ export async function GET(
       },
     });
 
+    console.log("dbEvent", dbEvent);
+
     const noCategories = dbEvent?.event_to_category.length === 0;
 
     const recommendations = await prisma.event.findMany({
       where: {
         NOT: {
-          id: Number(id), // Exclude the current event
+          slug, // Exclude the current event
         },
         event_to_category: {
           some: {
