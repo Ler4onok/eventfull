@@ -11,7 +11,6 @@ const commonIconProps = {
   className: "text-3xl",
 };
 
-// todo: change links
 export const Footer = () => {
   return (
     <div className="footer pt-12 pb-8 md:p-12 bg-brandPurple text-white flex items-center justify-between flex-col-reverse gap-12 md:gap-0 md:flex-row">
@@ -20,13 +19,13 @@ export const Footer = () => {
         <p>© 2024 Eventfull Madeira</p>
       </div>
       <div className="flex justify-center items-center gap-8">
-        <Link href="http://google.com">
+        {/* <Link href="http://google.com">
           <FacebookIcon {...commonIconProps} />
-        </Link>
-        <Link href="http://google.com">
+        </Link> */}
+        <Link href="https://www.instagram.com/eventfull.app/">
           <InstagramIcon {...commonIconProps} />
         </Link>
-        <Link href="http://google.com">
+        <Link href="https://x.com/eventfull.app">
           <TwitterIcon {...commonIconProps} />
         </Link>
       </div>
